@@ -1,0 +1,27 @@
+{
+  "name": "trawl",
+  "version": "1.0.0",
+  "description": "Trawl is a WebApp to analyse your behaviour on social media sites.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FHS-TeamAwesome/Trawl.git"
+  },
+  "author": "Erfan Ebrahimnia, David Daxbacher, Theresa Höck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FHS-TeamAwesome/Trawl/issues"
+  },
+  "homepage": "https://github.com/FHS-TeamAwesome/Trawl#readme",
+  "dependencies": {
+    "jquery": "^3.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-sass": "^1.2.1",
+    "load-grunt-tasks": "^3.5.2"
+  }
+}

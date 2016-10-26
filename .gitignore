@@ -1,0 +1,15 @@
+### Folders ###
+build
+node_modules
+.idea
+.tmp
+
+### Files ###
+._*
+.DS_Store
+.project
+.cache
+*.sublime-project
+*.sulime-workspace
+*.log
+*.iml
