@@ -1,4 +1,5 @@
 # Trawl
 Trawl is a WebApp to analyse your behaviour on social media sites.
 
-Hello Theresa was here.
+grunt		build all files add starts the whatch task
+grunt build builds all files
