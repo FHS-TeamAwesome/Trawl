@@ -1,0 +1,9 @@
+{
+    "node"          : true,     // Node.js
+    "jquery"        : true,     // JQuery
+
+    // Custom Globals
+    "globals"       : {        // additional predefined global variables
+        "require": true
+    }
+}
