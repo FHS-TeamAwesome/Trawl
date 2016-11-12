@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Prototype
+        </title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+          $('document').ready( function() {
+          
+          //access token : EAACEdEose0cBAGTdpp2ZCL3I328YKO7jOt4ORwwdZArzkwVZCQelTjhSxCGrOeAtZAF8bA5w8EZA8DR7Lggw03mB07Fwy7hogLMK58qwQx44Hdzv2VPtXPDjZAk7go4k2P2XrytQf5Jrp0a0cgEJtbYJvR3eI2HLcUNBfJ8BlKaU5usyZBTDPluvDiQWLtTIW8ZD
+
+            window.fbAsyncInit = function() { 
+
+              FB.init({
+                appId      : '722531051233683',
+                xfbml      : true,
+                version    : 'v2.8'
+              });
+
+              FB.AppEvents.logPageView();
+
+              $('.login').on('click', function() {
+
+                FB.login();
+
+                FB.getLoginStatus(statusChangeCallback);
+
+                FB.getLoginStatus(function(response) {
+
+                  statusChangeCallback(response);
+
+                });
+
+                function statusChangeCallback(response) {
+
+                  console.log('statusChangeCallback');
+                  console.log(response);
+                  // The response object is returned with a status field that lets the
+                  // app know the current login status of the person.
+                  // Full docs on the response object can be found in the documentation
+                  // for FB.getLoginStatus().
+                  if (response.status === 'connected') {
+                    // Logged into your app and Facebook.
+                  } 
+                  else if (response.status === 'not_authorized') {
+                    // The person is logged into Facebook, but not your app.
+                    document.getElementById('status').innerHTML = 'Please log ' +
+                      'into this app.';
+                  } 
+                  else {
+                    // The person is not logged into Facebook, so we're not sure if
+                    // they are logged into this app or not.
+                    document.getElementById('status').innerHTML = 'Please log ' +
+                      'into Facebook.';
+                  }
+                };
+              });
+            };
+              // FB.api(
+              // "/100009752594170?fields=age_range",
+              //  redirect=false,
+              //   function (response) {
+              //     if (response && !response.error) {
+
+              //       console.log(response);
+              //       var url = response.min;
+              //       $('#prototype').prepend('<p>"'+url+'"<p/>');
+
+              //     }
+              //   }
+              // );
+              (function(d, s, id) {
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "http://connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+          });     
+        </script>
+    </head>
+    <body>
+        <div id="prototype">
+            Meine Likes: 
+        </div>
+        <button class="login">Login with Facebook</button>
+    </body>
+</html>
