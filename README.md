@@ -17,4 +17,4 @@ After cloning this repo you need to run `npm install` to install all the needed 
 ```bash          
     grunt serve             starts a lightweight server and opens the app inside your browser
     grunt build             builds all files for deployment
-```‚
+```
