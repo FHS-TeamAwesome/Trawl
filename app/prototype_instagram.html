@@ -15,8 +15,18 @@
                 height: 400px;
                 width: 400px;
             }
+            .insta_photo {
+              border: 5px solid rgba(0, 0, 0, 0) !important;
+            }
+            .insta_photo:hover {
+              border: 5px solid #FFF !important;
+            }
         </style>
+
+        <link href="vendor/lightbox/lightbox.css" rel="stylesheet">
+
         <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="vendor/lightbox/lightbox.js"></script>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh-kj7TyOmyZqhXADnBJOQGP3iDlVu85E&signed_in=true"></script>
         <script>
@@ -86,7 +96,14 @@ function USGSOverlay(bounds, image, map) {
  */
 USGSOverlay.prototype.onAdd = function() {
 
+  var a = document.createElement('a');
+  a.href = this.image_;
+  a.setAttribute("data-lightbox","image-1");
+  a.setAttribute("data-title","Blabla");
+
   var div = document.createElement('div');
+  var name = "insta_photo";
+  div.setAttribute("class", name);
   div.style.borderStyle = 'none';
   div.style.borderWidth = '0px';
   div.style.position = 'absolute';
@@ -97,13 +114,19 @@ USGSOverlay.prototype.onAdd = function() {
   img.style.width = '100%';
   img.style.height = '100%';
   img.style.position = 'absolute';
-  div.appendChild(img);
+
+  a.appendChild(img);
+
+  div.appendChild(a);
 
   this.div_ = div;
 
   // Add the element to the "overlayLayer" pane.
   var panes = this.getPanes();
   panes.overlayLayer.appendChild(div);
+
+  panes.overlayMouseTarget.appendChild(div); // this.marker = my dom el
+  google.maps.event.addDomListener(div, 'onmouseover', function(){  });
 };
 // [END region_attachment]
 
@@ -160,7 +183,7 @@ USGSOverlay.prototype.onRemove = function() {
                             $('ul').append('Latitude: "'+data.data[x].location.latitude+'<br>');
                             $('ul').append('Longitude: "'+data.data[x].location.longitude+'<br>');
                             $('ul').append('Name: "'+data.data[x].location.name+'<br>');
-                            var picture = {name:data.data[x].location.name,lat:data.data[x].location.latitude,lng:data.data[x].location.longitude,pic:data.data[x].images.low_resolution.url};
+                            var picture = {name:data.data[x].location.name,lat:data.data[x].location.latitude,lng:data.data[x].location.longitude,pic:data.data[x].images.standard_resolution.url};
                             picture_arr.push(picture);
                         }
                         $('ul').append('</li>'); // data.data[x].images.low_resolution.url - URL of image, 306х306
