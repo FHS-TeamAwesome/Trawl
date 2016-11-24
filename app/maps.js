@@ -9,15 +9,19 @@
 // Note that we set the prototype to an instance, rather than the
 // parent class itself, because we do not wish to modify the parent class.
 var overlay = [];
+var map;
+var zoomLevel = 9;
 USGSOverlay.prototype = new google.maps.OverlayView();
 // Initialize the map and the custom overlay.
 
 function initMap(picture_arr) {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 9,
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: zoomLevel,
     center: {lat: picture_arr[0].lat, lng: picture_arr[0].lng},
     mapTypeId: google.maps.MapTypeId.MAP
   });
+
+  map.addListener('zoom_changed', onZoom);
 
   var bounds = [];
   var srcImage = [];
@@ -128,3 +132,44 @@ USGSOverlay.prototype.onRemove = function() {
   this.div_.parentNode.removeChild(this.div_);
   this.div_ = null;
 };
+
+
+
+function onZoom() {
+  var width = (map.getBounds().b.f - map.getBounds().b.b)/8;
+  var height = (map.getBounds().f.b - map.getBounds().f.f)/8;
+
+  for(var i = 0; i < overlay.length; i++)
+  {
+    var widthOfPicture = overlay[i].bounds_.b.f - overlay[i].bounds_.b.b;
+    var heightOfPicture = overlay[i].bounds_.f.b - overlay[i].bounds_.f.f;
+
+    if(map.getZoom() > zoomLevel) {
+      var widthDifference = (widthOfPicture - width)/2;
+      var heightDifference = (heightOfPicture - height)/2;
+      overlay[i].bounds_.f.f += heightDifference;
+      overlay[i].bounds_.b.b += widthDifference;
+
+      overlay[i].bounds_.b.f -= widthDifference;
+      overlay[i].bounds_.f.b -= heightDifference;
+
+      overlay[i].draw();
+    }
+    else {
+      var widthDifference = (width - widthOfPicture)/2;
+      var heightDifference = (height - heightOfPicture)/2;
+      overlay[i].bounds_.f.f -= heightDifference;
+      overlay[i].bounds_.b.b -= widthDifference;
+
+      overlay[i].bounds_.b.f += widthDifference;
+      overlay[i].bounds_.f.b += heightDifference;
+      
+      overlay[i].draw();
+    }
+  }
+
+  zoomLevel = map.getZoom();
+}
+
+
+
