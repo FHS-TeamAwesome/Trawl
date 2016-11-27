@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Instagram</title>
+
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 600px;
+                width: 600px;
+            }
+            .insta_photo {
+              border: 5px solid rgba(0, 0, 0, 0) !important;
+            }
+            .insta_photo:hover {
+              border: 5px solid #FFF !important;
+            }
+        </style>
+
+        <link href="vendor/lightbox/css/lightbox.css" rel="stylesheet">
+
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="vendor/lightbox/js/lightbox.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh-kj7TyOmyZqhXADnBJOQGP3iDlVu85E&signed_in=true"></script>
+        <script src="maps.js"></script>
+        <script src="instagram.js"></script>
+
+    </head>
+    <body>
+        <a href="https://api.instagram.com/oauth/authorize/?client_id=f1d78939afa047db8b7f586592aeca24&redirect_uri=http://localhost:9000/prototype_instagram.html&response_type=token">Login</a>
+        <div id="map"></div>
+        <!--<ul id="rudr_instafeed"></ul>-->
+    </body>
+</html>

@@ -1,11 +1,42 @@
-.navigation-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
+.navigation {
+    position: relative;
+    z-index: 5;
+    padding: 15px;
 }
 
-.navigation {
-    padding: 15px;
+.navigation-logo-container {
+    width: 100px;
+}
+
+.navigation-logo {
+    width: 100%;
+}
+
+.navigation-list {
+    a {
+        position: relative;
+        padding: 10px 15px;
+        display: inline-block;
+        color: #fff;
+        text-decoration: none;
+
+        &::after {
+            content: "";
+            transition: all .25s ease-in-out;
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0%;
+            height: 2px;
+            background: #fff;
+        }
+
+        &:hover {
+            &::after {
+                width: 100%;
+                left: 0%;
+            }
+        }
+    }
 }

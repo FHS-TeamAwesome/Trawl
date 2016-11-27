@@ -1,10 +1,12 @@
-@import "../../../node_modules/bootstrap-grid/main.scss";
-
 @import "variables";
+@import "../../../node_modules/bootstrap-grid/main.scss";
+@import "../../../node_modules/font-awesome/scss/font-awesome.scss";
 @import "normalize";
 @import "font";
 @import "page";
+@import "list";
 @import "navigation";
+@import "util";
 
 
 /**

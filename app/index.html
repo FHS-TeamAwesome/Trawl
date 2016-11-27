@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html lang="en">
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
@@ -10,7 +10,7 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="/dist/css/main.css">
+        <link rel="stylesheet" href="/dist/styles/css/main.css">
     </head>
     <body>
         <!--[if lte IE 9]>
@@ -19,13 +19,29 @@
 
         <!-- Add your site or application content here -->
         <main id="main">
-            <header class="page-section page-section-header">
+            <header class="page-section page-header">
                 <div class="container">
-                    Trawl
+                    <nav class="navigation util-clearfix">
+                        <div class="navigation-logo-container util-pull-left">
+                            <img class="navigation-logo" src="/img/logo.svg"/>
+                        </div>
+                        <ul class="navigation-list list-inline util-pull-right">
+                            <li>
+                                <a href="/about">About</a>
+                            </li>
+                            <li>
+                                <a href="/imprint">Imprint</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </header>
+
+            <div class="page-section">
+                <img style="width: 100%;" src="http://lorempixel.com/1280/720"/>
+            </div>
         </main>
 
-        <script src="/dist/js/main.min.js"></script>
+        <script src="/dist/js/main.js"></script>
     </body>
 </html>
