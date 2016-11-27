@@ -1,7 +1,8 @@
 'use strict';
 
 import AppKernel from 'core/kernel';
-import IndexController from './controllers/index-controller';
+import ServiceLocator from 'core/service-locator';
+import IndexController from 'app/controllers/index-controller';
 
 export default class App extends AppKernel {
     constructor() {
@@ -9,3 +10,5 @@ export default class App extends AppKernel {
         super();
     }
 }
+
+

@@ -12,14 +12,15 @@ _.templateSettings = {
 };
 
 export default Backbone.View.extend({
+    getService: ServiceLocator.get,
+    
+    EventDispatcher: EventDispatcher,
+
     initialize() {
         // All views get a default `template` property that is an empty div; your
         // views should override this property with a template appropriate for the
         // view, but if they don't, your views will get a div as their template.
         this.template = '<div></div>';
-
-        this.getService = ServiceLocator.get;
-        this.EventDispatcher = EventDispatcher;
     },
 
     render() {

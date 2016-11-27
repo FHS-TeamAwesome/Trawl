@@ -1,0 +1,51 @@
+@mixin btn($color) {
+    background: $color;
+
+    &:hover {
+        background: darken($color, 10%);
+    }
+}
+
+.btn {
+    display: inline-block;
+    line-height: 1.6;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 2px solid transparent;
+    color: #fff;
+    padding: 10px 15px;
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+.btn-facebook,
+.btn-twitter,
+.btn-instagram {
+    width: 100%;
+
+    .fa {
+        font-size: 18px;
+        position: relative;
+        transform: scale(1.8);
+        top: 2px;
+        left: -10px;
+    }
+}
+
+.btn-facebook {
+    @include btn(#3B5998);
+}
+
+.btn-twitter {
+    @include btn(#55acee);
+}
+
+.btn-instagram {
+    @include btn(#8a3ab9);
+}
