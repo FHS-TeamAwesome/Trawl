@@ -70,9 +70,11 @@
             let newresult;
 
             FB.api(
-              "/dXNlcl9jb250ZAXh0OgGQuzXg8uubAbgnHLOwGaoZBi8iaZBgZAfCxg5Frhs32PiwUCyGRnoP72IU42sGc9MfJZBALRLyV6AZCmLHh0urwNB52vtglCh32faoQFP4mudjFHPYZD?fields=mutual_friends",
+              "/dXNlcl9jb250ZAXh0OgGQWOtXg1a3f0SzjhPPywjaqW30ELUjOde4XOeywB4mHCUStOTOZA3HORMXpA2hWLVP4NQXovqTZAHTOqtrtE1TYO4lYZCqUMiXSZAQpkXpJe1pWYgZD/mutual_likes?limit=500",
               redirect=false,
               function (response) {
+                console.log(response);
+
                 if (response && !response.error) {
 
                   console.log(response);
