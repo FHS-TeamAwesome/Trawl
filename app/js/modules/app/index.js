@@ -1,13 +1,15 @@
 'use strict';
 
 import AppKernel from 'core/kernel';
-import ServiceLocator from 'core/service-locator';
 import IndexController from 'app/controllers/index-controller';
+import PageController from 'app/controllers/page-controller';
+import Services from 'app/services';
 
 export default class App extends AppKernel {
-    constructor() {
-        new IndexController();
-        super();
+    constructor(options) {
+        let indexController = new IndexController();
+        let pageController = new PageController();
+        super(options);
     }
 }
 

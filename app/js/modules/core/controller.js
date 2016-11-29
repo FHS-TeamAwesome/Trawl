@@ -6,5 +6,11 @@ import { EventDispatcher } from './event-dispatcher';
 
 export default Backbone.Router.extend({
     getService: ServiceLocator.get,
-    EventDispatcher: EventDispatcher
+    
+    EventDispatcher: EventDispatcher,
+
+    setView(view) {
+        this.getService('MainViewService')
+            .setView(view);
+    }
 });

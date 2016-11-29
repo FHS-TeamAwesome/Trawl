@@ -39,6 +39,7 @@
     "grunt-open": "^0.2.3",
     "grunt-sass": "^1.2.1",
     "load-grunt-tasks": "^3.5.2",
+    "partialify": "^3.1.6",
     "uglifyify": "^3.0.4"
   }
 }
