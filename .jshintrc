@@ -1,6 +1,8 @@
 {
     "node"          : true,     // Node.js
     "jquery"        : true,     // JQuery
+    "strict"        : true,     // Strict Mode
+    "esversion"     : 6,
 
     // Custom Globals
     "globals"       : {        // additional predefined global variables
