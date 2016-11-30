@@ -1,6 +1,7 @@
 'use strict';
 
-var Twitter = require('./modules/twitter');
+import App from 'app';
 
-// initializing twitter module
-new Twitter();
+// initializing app module
+let app = new App();
+app.start();

@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+var serveStatic = require('serve-static');
 var configify = require('config-browserify');
 
 module.exports = function(grunt) {
@@ -25,7 +27,27 @@ module.exports = function(grunt) {
                 options: {
                     port: 9000,
                     hostname: '0.0.0.0',
-                    base: '<%= paths.app %>'
+                    base: '<%= paths.app %>',
+                    middleware: function(connect, options) {
+                        const middlewares = [];
+
+                        if (!Array.isArray(options.base)) {
+                            options.base = [options.base];
+                        }
+
+                        options.base.forEach(function(base) {
+                            middlewares.push(serveStatic(base));
+                        });
+
+                        // default: index.html
+                        middlewares.push(function(req, res) {
+                          fs
+                            .createReadStream(`${options.base}/index.html`)
+                            .pipe(res);
+                        });
+                        
+                        return middlewares;
+                    }
                 }
             }
         },
@@ -37,30 +59,41 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    '<%= paths.build %>/css/main.css': '<%= paths.app %>/styles/scss/main.scss'
+                    '<%= paths.build %>/styles/css/main.css': '<%= paths.app %>/styles/scss/main.scss'
                 }
+            }
+        },
+
+        clean: {
+            dist: ['<%= paths.build %>/**']
+        },
+
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= paths.app %>',
+                    dest: '<%= paths.build %>',
+                    src: [
+                        'styles/fonts/**/*'
+                    ]
+                }]
             }
         },
 
         browserify: {
             options: {
                 browserifyOptions: {
-                    debug: true
+                    debug: true,
+                    paths: ['./node_modules','<%= paths.app %>/js/modules/']
                 },
-                transform: [configify]
+                transform: ['babelify', configify, 'uglifyify'],
             },
 
             build: {
                 files: {
                     '<%= paths.build %>/js/main.js': ['<%= paths.app %>/js/main.js']
-                }
-            }
-        },
-
-        uglify: {
-            build: {
-                files: {
-                    '<%= paths.build %>/js/main.min.js': ['<%= paths.build %>/js/main.js']
                 }
             }
         },
@@ -92,6 +125,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('build', ['sass', 'jshint', 'browserify', 'uglify']);
+    grunt.registerTask('build', ['jshint', 'clean', 'browserify', 'sass', 'copy']);
     grunt.registerTask('serve', ['build', 'connect:server', 'open','watch']);
 };
