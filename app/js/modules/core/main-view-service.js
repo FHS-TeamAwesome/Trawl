@@ -15,7 +15,6 @@ ServiceLocator.create('MainViewService', Backbone.View.extend({
         this.removeView();
         this.view = view;
         this.view.render().placeAt(this.$el);
-        console.log(view);
     },
 
     removeView() {

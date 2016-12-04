@@ -3,6 +3,7 @@
     "jquery"        : true,     // JQuery
     "strict"        : true,     // Strict Mode
     "esversion"     : 6,
+    "browser"       : true,
 
     // Custom Globals
     "globals"       : {        // additional predefined global variables

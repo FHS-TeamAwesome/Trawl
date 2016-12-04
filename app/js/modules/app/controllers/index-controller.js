@@ -1,7 +1,9 @@
 'use strict';
 
 import Controller from 'core/controller';
-import HomeView from 'app/views/home-view';
+import IndexView from 'app/views/index-view';
+
+import Twitter from 'twitter';
 
 export default Controller.extend({
     routes: {
@@ -9,11 +11,14 @@ export default Controller.extend({
     },
 
     initialize() {
-        console.log('Hello');
+        this.ProviderManager = this.getService('ProviderManager');
+        this.ProviderManager
+                .add('twitter', new Twitter());
+                // .add('facebook', new Facebook())
+                // .add('instagram', new Instagram());
     },
 
     indexAction() {
-        console.log('index');
-        new HomeView();
+        this.setView(new IndexView());
     }
 });

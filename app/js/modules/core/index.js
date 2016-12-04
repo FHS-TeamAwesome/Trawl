@@ -6,14 +6,14 @@ import Model from './model';
 import Collection from './collection';
 import Controller from './controller';
 import ServiceLocator from './service-locator';
-import { EventDispatcher } from './event-dispatcher';
+import EDWrapper from './event-dispatcher';
 
 export default { 
     Model, 
     Collection, 
     View, 
     Controller, 
-    EventDispatcher, 
-    ServiceLocator 
+    ServiceLocator,
+    EventDispatcher: EDWrapper.EventDispatcher
 };
 

@@ -4,7 +4,7 @@ import $ from 'jQuery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import ServiceLocator from './service-locator';
-import { EventDispatcher } from './event-dispatcher';
+import EDWrapper from './event-dispatcher';
 
 _.templateSettings = {
     interpolate: /\{\{=(.+?)\}\}/g,
@@ -14,7 +14,7 @@ _.templateSettings = {
 export default Backbone.View.extend({
     getService: ServiceLocator.get,
     
-    EventDispatcher: EventDispatcher,
+    EventDispatcher: EDWrapper.EventDispatcher,
 
     // All views get a default `template` property that is an empty div; your
     // views should override this property with a template appropriate for the
