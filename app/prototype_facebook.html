@@ -8,8 +8,6 @@
         <script type="text/javascript">
 
           $('document').ready( function() {
-          
-          //access token : EAACEdEose0cBAGTdpp2ZCL3I328YKO7jOt4ORwwdZArzkwVZCQelTjhSxCGrOeAtZAF8bA5w8EZA8DR7Lggw03mB07Fwy7hogLMK58qwQx44Hdzv2VPtXPDjZAk7go4k2P2XrytQf5Jrp0a0cgEJtbYJvR3eI2HLcUNBfJ8BlKaU5usyZBTDPluvDiQWLtTIW8ZD
 
             window.fbAsyncInit = function() { 
 
@@ -23,7 +21,10 @@
 
               $('.login').on('click', function() {
 
-                FB.login();
+                FB.login(function(response){
+
+                }, {scope: 'manage_pages'}
+                );
 
                 FB.getLoginStatus(function(response) {
 
@@ -37,8 +38,9 @@
                   console.log(response);
                   
                   if (response.status === 'connected') {
+                    let accessToken = response.authResponse.accessToken;
 
-                    firstAPIQuery();
+                    firstAPIQuery(accessToken);
                     
                   } 
                   else if (response.status === 'not_authorized') {
@@ -64,26 +66,34 @@
              }(document, 'script', 'facebook-jssdk'));
           });  
 
-          function firstAPIQuery(){
-
+          function firstAPIQuery(accessToken){
             let result;
             let newresult;
 
+            console.log(accessToken);
+
             FB.api(
-              "/dXNlcl9jb250ZAXh0OgGQuzXg8uubAbgnHLOwGaoZBi8iaZBgZAfCxg5Frhs32PiwUCyGRnoP72IU42sGc9MfJZBALRLyV6AZCmLHh0urwNB52vtglCh32faoQFP4mudjFHPYZD?fields=mutual_friends",
+              "/me?fields=likes.limit(500)&access_token="+accessToken+"",
+
               redirect=false,
+              
               function (response) {
+
+                console.log(response);
+
                 if (response && !response.error) {
 
-                  console.log(response);
 
-                  result = response.data;
 
-                  $('#prototype').prepend('<p>"'+result+'"<p/>');
+                  result = response.likes.data;
+
+                  for (var i = result.length - 1; i >= 0; i--) {
+                    $('#prototype').prepend('<p>"'+result[i].name+'"<p/>');
+                  }  
                 }
               }
             );
-          }   
+          }  //additional permissions
         </script>
     </head>
     <body>
