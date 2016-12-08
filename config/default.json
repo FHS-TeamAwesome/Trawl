@@ -4,21 +4,30 @@
         "rootPath": "../app"
     },
 
-    "providers": {
-        "twitter": {
-            "owner": "@_3rfan",
-            "api": "https://api.twitter.com/1.1",
-            "consumerKey": "57CoZ4w58hdrp3pTJVVzwjIDv",
-            "consumerSecret": "3cmSP5L0eiYmqN7exE5BIXB0escFvol7jMQEihywniNb9tT16t",
-            "callbackURL": "http://localhost:3000/auth/twitter/callback"
-        },
-        "facebook": {
-            "owner": "Theresa Elisa",
-            "api": "https://graph.facebook.com",
-            "consumerKey": "722531051233683",
-            "permissions": ["pages_show_list", "email"],
-            "consumerSecret": "7bbe074c8cee9d9d43fe6736414d3a82",
-            "callbackURL": "http://localhost:3000/auth/facebook/callback"
+    "Client": {
+        "providers": {
+            "twitter": {
+                "owner": "@_3rfan",
+                "api": "https://api.twitter.com/1.1",
+                "consumerKey": "57CoZ4w58hdrp3pTJVVzwjIDv",
+                "consumerSecret": "3cmSP5L0eiYmqN7exE5BIXB0escFvol7jMQEihywniNb9tT16t",
+                "callbackURL": "http://localhost:3000/auth/twitter/callback"
+            },
+            "facebook": {
+                "owner": "Theresa Elisa",
+                "api": "https://graph.facebook.com",
+                "consumerKey": "722531051233683",
+                "permissions": ["pages_show_list", "email"],
+                "consumerSecret": "7bbe074c8cee9d9d43fe6736414d3a82",
+                "callbackURL": "http://localhost:3000/auth/facebook/callback"
+            },
+            "instagram": {
+                "owner": "Daxi95",
+                "api": "https://api.instagram.com/v1",
+                "consumerKey": "f1d78939afa047db8b7f586592aeca24",
+                "consumerSecret": "a0a181711cf84b66b71d7c6d1fbe6e1e",
+                "callbackURL": "http://localhost:3000/auth/instagram/callback"
+            }
         }
     },
 

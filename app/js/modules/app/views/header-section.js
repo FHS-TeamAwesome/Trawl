@@ -13,10 +13,12 @@ export default View.extend({
 
     postRender() {
         this.$el.on('click', '#twitter-login:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
+        this.$el.on('click', '#instagram-login:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
     },
 
     postPlaceAt() {
         this.ProviderManager.fetchAuth('twitter').then(this.setBtnStates.bind(this));
+        // this.ProviderManager.fetchAuth('instagram').then(this.setBtnStates.bind(this));
     },
 
     setBtnStates() {
@@ -26,12 +28,14 @@ export default View.extend({
         }
 
         // if (this.ProviderManager.get('twitter').isAuthenticated()) {
+        //     this.ProviderManager.get('twitter').fetch();
         //     this.disableLoginBtn(this.$el.find('#facebook-login'));
         // }
 
-        // if (this.ProviderManager.get('twitter').isAuthenticated()) {
-        //     this.disableLoginBtn(this.$el.find('#instagram-login'));
-        // }
+        if (this.ProviderManager.get('instagram').isAuthenticated()) {
+            // this.ProviderManager.get('instagram').fetch();
+            this.disableLoginBtn(this.$el.find('#instagram-login'));
+        }
     },
 
     disableLoginBtn($btn) {
@@ -42,6 +46,14 @@ export default View.extend({
         let $btn = $(event.currentTarget);
         
         this.ProviderManager.authenticate('twitter').then(function() {
+            this.disableLoginBtn($btn);
+        }.bind(this));
+    },
+
+    instagramLoginHandler(event) {
+        let $btn = $(event.currentTarget);
+        
+        this.ProviderManager.authenticate('instagram').then(function() {
             this.disableLoginBtn($btn);
         }.bind(this));
     }
