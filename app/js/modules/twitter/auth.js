@@ -114,6 +114,8 @@ import Model from 'core/model';
 module.exports = Model.extend({
     isAuthenticated: false,
 
+    authUrl: '/api/twitter/auth',
+
     url() {
         return '/api/twitter/account/verify_credentials.json';
     },
