@@ -32,7 +32,9 @@ module.exports = function(passport) {
     passport.use(new FacebookStrategy({
         clientID: config.get('providers.facebook.consumerKey'),    
         clientSecret: config.get('providers.facebook.consumerSecret'),
-        callbackURL: config.get('providers.facebook.callbackURL')
+        callbackURL: config.get('providers.facebook.callbackURL'),
+        profileFields: config.get('providers.facebook.profileFields'),
+        enableProof: config.get('providers.facebook.enableProof')
     }, function(accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
             done(null, {

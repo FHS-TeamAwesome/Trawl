@@ -1,0 +1,22 @@
+'use strict';
+
+import Model from 'core/model';
+import Auth from 'facebook/auth';
+import Likes from 'facebook/likes';
+
+module.exports = Model.extend({
+    initialize() {
+        this.auth = new Auth();
+        this.likes = new Likes();
+    },
+
+    isAuthenticated() {
+        return this.auth.isAuthenticated;
+    },
+
+    fetch() {
+        return this.likes.fetch().then(function() {
+            this.EventDispatcher.trigger('fetched:twitter:likes');
+        }.bind(this));
+    }
+});
