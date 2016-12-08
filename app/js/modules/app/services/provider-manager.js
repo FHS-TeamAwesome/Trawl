@@ -43,7 +43,7 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
             failHandler: dfd.reject
         };
 
-        window.open(address, target, settings)
+        window.open(address, target, settings);
 
         return dfd.promise();
     }
