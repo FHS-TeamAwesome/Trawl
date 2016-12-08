@@ -2,11 +2,15 @@
 
 import Backbone from 'backbone';
 import ServiceLocator from './service-locator';
-import { EventDispatcher } from './event-dispatcher';
+import EDWrapper from './event-dispatcher';
 
 export default Backbone.Router.extend({
-    initialize() {
-        this.getService = ServiceLocator.get;
-        this.EventDispatcher = EventDispatcher;
+    getService: ServiceLocator.get,
+    
+    EventDispatcher: EDWrapper.EventDispatcher,
+
+    setView(view) {
+        this.getService('MainViewService')
+            .setView(view);
     }
 });

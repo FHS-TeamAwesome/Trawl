@@ -3,5 +3,5 @@
 import App from 'app';
 
 // initializing app module
-let app = new App();
+let app = new App({ el: '#main' });
 app.start();

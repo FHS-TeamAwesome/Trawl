@@ -88,7 +88,12 @@ module.exports = function(grunt) {
                     debug: true,
                     paths: ['./node_modules','<%= paths.app %>/js/modules/']
                 },
-                transform: ['babelify', configify, 'uglifyify'],
+                transform: [
+                    'partialify',
+                    'babelify',
+                    configify, 
+                    'uglifyify'
+                ],
             },
 
             build: {

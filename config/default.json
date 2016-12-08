@@ -1,5 +1,30 @@
 {
-    "provider": {
-        "api": "api.provider.base.url"
+    "http": {
+        "port": 3000,
+        "rootPath": "../app"
+    },
+
+    "providers": {
+        "twitter": {
+            "owner": "@_3rfan",
+            "api": "https://api.twitter.com/1.1",
+            "consumerKey": "57CoZ4w58hdrp3pTJVVzwjIDv",
+            "consumerSecret": "3cmSP5L0eiYmqN7exE5BIXB0escFvol7jMQEihywniNb9tT16t",
+            "callbackURL": "http://localhost:3000/auth/twitter/callback"
+        },
+        "facebook": {
+            "owner": "Theresa Elisa",
+            "api": "https://graph.facebook.com",
+            "consumerKey": "722531051233683",
+            "permissions": ["pages_show_list", "email"],
+            "consumerSecret": "7bbe074c8cee9d9d43fe6736414d3a82",
+            "callbackURL": "http://localhost:3000/auth/facebook/callback"
+        }
+    },
+
+    "auth": {
+        "session": {
+            "secret": "Th15_1$_A_r4nD0m_5tRing!? 4nD iT 5h0uld b3 10ng.!"
+        }
     }
 }
