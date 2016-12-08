@@ -4,32 +4,31 @@ import $ from 'jQuery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import ServiceLocator from './service-locator';
-import { EventDispatcher } from './event-dispatcher';
+import EDWrapper from './event-dispatcher';
 
 _.templateSettings = {
     interpolate: /\{\{=(.+?)\}\}/g,
-    evaluate: /\{\{(.+?)\}\}/g,
+    evaluate: /\{\{(.+?)\}\}/g
 };
 
 export default Backbone.View.extend({
-    initialize() {
-        // All views get a default `template` property that is an empty div; your
-        // views should override this property with a template appropriate for the
-        // view, but if they don't, your views will get a div as their template.
-        this.template = '<div></div>';
+    getService: ServiceLocator.get,
+    
+    EventDispatcher: EDWrapper.EventDispatcher,
 
-        this.getService = ServiceLocator.get;
-        this.EventDispatcher = EventDispatcher;
-    },
+    // All views get a default `template` property that is an empty div; your
+    // views should override this property with a template appropriate for the
+    // view, but if they don't, your views will get a div as their template.
+    template: '<div></div>',
 
     render() {
-      var tpl = _.template(this.template);
-      var data = this.serialize();
+        var tpl = _.template(this.template);
+        var data = this.serialize();
 
-      this.$el.html(tpl(data));
-      this.postRender();
+        this.$el.html(tpl(data));
+        this.postRender();
 
-      return this;
+        return this;
     },
 
     // The `serialize` method is responsible for taking the view's data and
@@ -39,11 +38,11 @@ export default Backbone.View.extend({
     // serializing it using the `toJSON` method; if your view does not have
     // a model or collection, it will just return the view object itself.
     serialize() {
-      if (this.model || this.collection) {
-        return (this.model || this.collection).toJSON();
-      }
+        if (this.model || this.collection) {
+            return (this.model || this.collection).toJSON();
+        }
 
-      return this;
+        return this;
     },
 
     // Once the view has been rendered, it still needs to be placed in the
@@ -53,25 +52,25 @@ export default Backbone.View.extend({
     // argument, which determines how the object will be placed in the
     // destination node: as the first, last, or only child.
     placeAt(node, position) {
-      position = position || 'last';
+        position = position || 'last';
 
-      var method = {
-        'first' :     'prepend',
-        'last' :      'append',
-        'only' :      'html'
-      }[position] || 'append';
+        var method = {
+            'first' :     'prepend',
+            'last' :      'append',
+            'only' :      'html'
+        }[position] || 'append';
 
-      $(node)[method](this.$el);
+        $(node)[method](this.$el);
 
-      this.postPlaceAt();
-      return this;
+        this.postPlaceAt();
+        return this;
     },
 
     // The `destroy` method unbinds all handlers that were bound using
     // `bindTo`, and also calls the default `remove` method.
     destroy() {
-      this.unbind();
-      this.remove();
+        this.unbind();
+        this.remove();
     },
 
     // Lifecycle Methods

@@ -1,17 +1,19 @@
 'use strict';
 
-export default {
-    services: {},
+let services = {};
 
+let ServiceLocator = {
     get(serviceName) {
-        return this.services[serviceName] || null;
+        return services[serviceName] || null;
     },
 
     create(serviceName, service) {
-        if (this.services[serviceName]) {
+        if (services[serviceName]) {
             throw new Error('Service already exists!');
         }
 
-        this.services[serviceName] = new service();
+        services[serviceName] = new service();
     }
 };
+
+export default ServiceLocator;
