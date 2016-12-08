@@ -21,7 +21,7 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
     authenticate(name) {
         let provider = this.get(name);
 
-        return this.openPopup().then(function() {
+        return this.openPopup(provider.authUrl).then(function() {
             provider.auth.fetch();
         });
     }
@@ -32,9 +32,9 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
         return provider.auth.fetch();
     }
 
-    openPopup() {
+    openPopup(authUrl) {
         var dfd = $.Deferred();
-        let address = 'http://' + window.location.host + '/auth/twitter';
+        let address = 'http://' + window.location.host + authUrl;
         let target = '_blank';
         let settings = 'toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=500,width=900,height=700';
 
