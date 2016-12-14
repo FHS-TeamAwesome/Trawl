@@ -18,4 +18,18 @@ module.exports = function(app) {
             });
         }
     }));
+
+    // app.use(oauthProxy({
+    //     endpoint: '/api/facebook/',
+    //     target: config.get('providers.facebook.api'),
+    //     provider: function(req) {
+    //         var user = req.user || {};
+            
+    //         return when({
+    //             consumerKey: config.get('providers.facebook.consumerKey'),
+    //             consumerSecret: config.get('providers.facebook.consumerSecret'),
+    //             facebookAccessToken: user.facebookAccessToken
+    //         });
+    //     }
+    // }));
 }

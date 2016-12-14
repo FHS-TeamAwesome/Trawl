@@ -23,8 +23,7 @@
 
                 FB.login(function(response){
 
-                }, {scope: 'manage_pages'}
-                );
+                }, {scope: 'manage_pages, user_likes'});
 
                 FB.getLoginStatus(function(response) {
 
@@ -73,7 +72,7 @@
             console.log(accessToken);
 
             FB.api(
-              "/me?fields=likes.limit(500)&access_token="+accessToken+"",
+              "/359789954356088/likes?access_token="+accessToken+"",
 
               redirect=false,
               
@@ -83,13 +82,36 @@
 
                 if (response && !response.error) {
 
+                  let key = "";
 
+                  let dayObj = {};
 
                   result = response.likes.data;
 
+
+
                   for (var i = result.length - 1; i >= 0; i--) {
-                    $('#prototype').prepend('<p>"'+result[i].name+'"<p/>');
+                    $('#prototype').prepend('<p>"'+result[i].created_time+'"<p/>');
+
+                    let dateObj = new Date(result[i].created_time);
+                    let month = dateObj.getUTCMonth();
+                    let day = dateObj.getUTCDate();
+                    let year = dateObj.getUTCFullYear();
+
+                    key = "" + year + "/" + month + "/" + day;
+
+                    //console.log(dayObj.key);
+
+                    if(!dayObj[key]){
+
+                      dayObj[key] = 1;
+
+                    }
+                    else{
+                      dayObj[key]++;
+                    }
                   }  
+                  console.log(dayObj);
                 }
               }
             );
