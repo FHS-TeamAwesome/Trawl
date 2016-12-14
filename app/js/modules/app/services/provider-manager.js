@@ -25,6 +25,11 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
             if(provider.auth.getAccessToken){
                 return provider.auth.getAccessToken().then(provider.auth.fetch.bind(this)).then(function(){
                     console.log(provider.auth);
+            if (provider.auth.getAccessToken) {
+                return provider.auth.getAccessToken().then(function() {
+                    provider.auth.fetch().then(function() {
+                        console.log(provider.auth);
+                    });
                 });
             }
             provider.auth.fetch();
