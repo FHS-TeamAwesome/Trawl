@@ -1,6 +1,7 @@
 var config = require('config');
 var TwitterStrategy = require('passport-twitter').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var InstagramStrategy = require('passport-instagram').Strategy;
 
 module.exports = function(passport) {
     // used to serialize the user for the session
@@ -15,9 +16,9 @@ module.exports = function(passport) {
 
     // Twitter OAuth login
     passport.use(new TwitterStrategy({
-        consumerKey: config.get('providers.twitter.consumerKey'),
-        consumerSecret: config.get('providers.twitter.consumerSecret'),
-        callbackURL: config.get('providers.twitter.callbackURL')
+        consumerKey: config.get('Client.providers.twitter.consumerKey'),
+        consumerSecret: config.get('Client.providers.twitter.consumerSecret'),
+        callbackURL: config.get('Client.providers.twitter.callbackURL')
     }, function(accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
             done(null, {
@@ -30,15 +31,30 @@ module.exports = function(passport) {
 
     // Facebook OAuth login
     passport.use(new FacebookStrategy({
-        clientID: config.get('providers.facebook.consumerKey'),    
-        clientSecret: config.get('providers.facebook.consumerSecret'),
-        callbackURL: config.get('providers.facebook.callbackURL')
+        clientID: config.get('Client.providers.facebook.consumerKey'),    
+        clientSecret: config.get('Client.providers.facebook.consumerSecret'),
+        callbackURL: config.get('Client.providers.facebook.callbackURL')
     }, function(accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
             done(null, {
                 facebookId: profile.id,
                 facebookAccessToken: accessToken,
                 facebookAccessTokenSecret: accessTokenSecret
+            });
+        });
+    }));
+
+    // Instagram OAuth login
+    passport.use(new InstagramStrategy({
+        clientID: config.get('Client.providers.instagram.consumerKey'),
+        clientSecret: config.get('Client.providers.instagram.consumerSecret'),
+        callbackURL: config.get('Client.providers.instagram.callbackURL')
+      }, function(accessToken, accessTokenSecret, profile, done) {
+        process.nextTick(function() {
+            done(null, {
+                instagramId: profile.id,
+                instagramAccessToken: accessToken,
+                instagramAccessTokenSecret: accessTokenSecret
             });
         });
     }));

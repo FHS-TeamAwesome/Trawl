@@ -78,8 +78,7 @@ module.exports = function(config){
       credentials.consumerSecret,
       credentials.tokenSecret
     ),
-    header = 'OAuth ' + (credentials.facebookAccessKey ? credentials.facebookAccessKey : '') +
-      'oauth_nonce="' + nonce + '"' +
+    header = 'OAuth oauth_nonce="' + nonce + '"' +
       (credentials.tokenKey ? ',oauth_token="' + credentials.tokenKey + '"' : '') +
       ',oauth_signature_method="' + parameters.oauth_signature_method + '"' +
       ',oauth_timestamp="' + timestamp + '"' +
