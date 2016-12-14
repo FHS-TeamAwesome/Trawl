@@ -22,14 +22,21 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
         let provider = this.get(name);
 
         return this.openPopup(provider.auth.authUrl).then(function() {
+            //For instagram and facebook
             if (provider.auth.getAccessToken) {
                 return provider.auth.getAccessToken().then(function() {
                     provider.auth.fetch().then(function() {
                         console.log(provider.auth);
+
+                        if(provider.getPhotos){
+                            provider.getPhotos();
+                        }
+
                     });
                 });
             }
-            provider.auth.fetch();
+            //For twitter
+            return provider.auth.fetch();
         }.bind(this));
     }
 

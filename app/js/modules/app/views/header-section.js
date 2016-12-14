@@ -19,7 +19,7 @@ export default View.extend({
 
     postPlaceAt() {
         this.ProviderManager.fetchAuth('twitter').then(this.setBtnStates.bind(this));
-        // this.ProviderManager.fetchAuth('instagram').then(this.setBtnStates.bind(this));
+        this.ProviderManager.fetchAuth('instagram').then(this.setBtnStates.bind(this));
     },
 
     setBtnStates() {
@@ -41,6 +41,31 @@ export default View.extend({
 
     disableLoginBtn($btn) {
         $btn.addClass('is-loggedin');
+
+        let loginCount = 0;
+
+        if (this.ProviderManager.get('twitter').isAuthenticated()) {
+            loginCount++;
+        }
+        /*if (this.ProviderManager.get('facebook').isAuthenticated()) {
+            loginCount++;
+        }*/
+        if (this.ProviderManager.get('instagram').isAuthenticated()) {
+            loginCount++;
+        }
+
+        if(loginCount == 1) {
+            $('.progress-bar').width('33%');
+            $('.progress-bar').css("background-color", "#f63a0f");
+        }
+        else if(loginCount == 2) {
+            $('.progress-bar').width('66%');
+            $('.progress-bar').css("background-color", "#f2b01e");
+        }
+        else if(loginCount == 3) {
+            $('.progress-bar').width('100%');
+            $('.progress-bar').css("background-color", "#86e01e");
+        }
     },
 
     twitterLoginHandler(event) {
