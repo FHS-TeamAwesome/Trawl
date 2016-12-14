@@ -1,18 +1,20 @@
-'use strict'
-
+'use strict';
+import config from 'config';
+import $ from 'jquery';
 import Model from 'core/model';
 
 module.exports = Model.extend({
+    accessToken: null,
 
-    app.get('/auth/facebook',
-        passport.authenticate('facebook', { authType: 'rerequest', scope: ['user_friends', 'manage_pages'] }));
+    authUrl: '/auth/facebook',
 
-    app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', { failureRedirect: '/login' }),
-        function(req, res) {
-         // Successful authentication, redirect home.
-         
-         res.redirect('/');
-         });return data;
+    url() {
+        return config.get('providers.facebook.api')+'/me?access_token='+accessToken;
+    },
+
+    getAccessToken() {
+        return $.get('/auth/facebook/token').then(function(data) {
+            this.accessToken = data.token;
+        });
     }
 });
