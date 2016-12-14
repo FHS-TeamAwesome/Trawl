@@ -1,39 +1,24 @@
 'use strict';
 
-/**
- * Auth Schema
- * 
-{
-    "data": {
-        "id": "1574083",
-        "username": "snoopdogg",
-        "full_name": "Snoop Dogg",
-        "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_1574083_75sq_1295469061.jpg",
-        "bio": "This is my bio",
-        "website": "http://snoopdogg.com",
-        "counts": {
-            "media": 1320,
-            "follows": 420,
-            "followed_by": 3410
-        }
-    }
-}
-**/
-
 import $ from 'jquery';
 import config from 'config';
 import Model from 'core/model';
 import Backbone from 'backbone';
 
-module.exports = Model.extend({
-    isAuthenticated: false,
+import Collection from 'core/collection';
+import Photo from 'instagram/photo';
+
+module.exports = Collection.extend({
+    model: Photo,
 
     accessToken: null,
 
-    authUrl: '/auth/instagram',
+    initialize(accessToken) {
+        this.accessToken = accessToken;
+    },
 
     url() {
-        return config.get('Client.providers.instagram.api') + '/users/self/?access_token=' + this.accessToken;
+        return config.get('Client.providers.instagram.api') + '/users/self/media/recent/?access_token=' + this.accessToken;
     },
 
     sync : function(method, collection, options) {
@@ -49,17 +34,24 @@ module.exports = Model.extend({
         return Backbone.sync(method, collection, options);
     },
 
-    getAccessToken() {
-        return $.get('/auth/instagram/token').then(function(data) {
-            this.accessToken = data.token;
-        }.bind(this));
-    },
-
     parse(data) {
         if (!data) return {};
 
-        this.isAuthenticated = !!data.username;
+        //console.log(data);
+        let photoArr = [];
 
+        for(let x in data.data ){
+            if(data.data[x].location != null) {
+                let photo = new Photo({
+                    locationName: data.data[x].location.name,
+                    latitude: data.data[x].location.latitude,
+                    longitude: data.data[x].location.longitude,
+                    url: data.data[x].images.standard_resolution.url
+                });
+                photoArr.push(photo);
+            }
+        }
+        //console.log(photoArr);
         return data;
     }
 });
