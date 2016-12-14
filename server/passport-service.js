@@ -33,7 +33,9 @@ module.exports = function(passport) {
     passport.use(new FacebookStrategy({
         clientID: config.get('Client.providers.facebook.consumerKey'),    
         clientSecret: config.get('Client.providers.facebook.consumerSecret'),
-        callbackURL: config.get('Client.providers.facebook.callbackURL')
+        callbackURL: config.get('Client.providers.facebook.callbackURL'),
+        profileFields: config.get('Client.providers.facebook.profileFields'),
+        enableProof: config.get('Client.providers.facebook.enableProof')
     }, function(accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
             done(null, {

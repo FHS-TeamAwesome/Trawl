@@ -13,6 +13,7 @@ export default View.extend({
 
     postRender() {
         this.$el.on('click', '#twitter-login:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
+        this.$el.on('click', '#facebook-login:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
         this.$el.on('click', '#instagram-login:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
     },
 
@@ -75,6 +76,14 @@ export default View.extend({
         }.bind(this));
     },
 
+    facebookLoginHandler(event) {
+        let $btn = $(event.currentTarget);
+        
+        this.ProviderManager.authenticate('facebook').then(function() {
+            this.disableLoginBtn($btn);
+        }.bind(this));
+    },
+  
     instagramLoginHandler(event) {
         let $btn = $(event.currentTarget);
         
@@ -82,4 +91,6 @@ export default View.extend({
             this.disableLoginBtn($btn);
         }.bind(this));
     }
+
+
 });

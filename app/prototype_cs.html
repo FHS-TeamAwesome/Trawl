@@ -1,0 +1,79 @@
+<!doctype html lang="en">
+
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Trawl</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="/dist/styles/css/main.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <main id="main">
+            <header class="page-section page-header">
+                <div class="container">
+                    <nav class="navigation util-clearfix">
+                        <div class="navigation-logo-container util-pull-left">
+                            <img class="navigation-logo" src="/img/logo.svg"/>
+                        </div>
+                        <ul class="navigation-list list-inline util-pull-right">
+                            <li>
+                                <a href="/about">About</a>
+                            </li>
+                            <li>
+                                <a href="/imprint">Imprint</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="page-section">
+                <img style="width: 100%;" src="http://lorempixel.com/1280/720"/>
+            </div>
+            <div class="page-section">
+                <div id="chart">
+
+                </div>
+            </div>
+        </main>
+        <script src="/dist/js/main.js"></script>
+
+        <!-- Load d3.js and c3.js -->
+        <script src="/vendor/d3/d3.min.js" charset="utf-8">
+            
+        </script>
+        <script src="/vendor/c3/c3.min.js">
+
+        </script>
+        <script type="text/javascript">
+            var chart = c3.generate({
+                bindto: '#chart',
+                data: {
+                  columns: [
+                    ['data1', 30, 200, 100, 400, 150, 250],
+                    ['data2', 50, 20, 10, 40, 15, 25]
+                  ],
+                  axes: {
+                    data2: 'y2' // ADD
+                  }
+                },
+                axis: {
+                  y2: {
+                    show: true // ADD
+                  }
+                }
+            });
+        </script>
+    </body>
+</html>

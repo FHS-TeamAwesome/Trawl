@@ -37,7 +37,7 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
             }
             //For twitter
             return provider.auth.fetch();
-        });
+        }.bind(this));
     }
 
     fetchAuth(name) {

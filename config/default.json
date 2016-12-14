@@ -13,13 +13,15 @@
                 "consumerSecret": "3cmSP5L0eiYmqN7exE5BIXB0escFvol7jMQEihywniNb9tT16t",
                 "callbackURL": "http://localhost:3000/auth/twitter/callback"
             },
-            "facebook": {
+           "facebook": {
                 "owner": "Theresa Elisa",
                 "api": "https://graph.facebook.com",
                 "consumerKey": "722531051233683",
                 "permissions": ["pages_show_list", "email"],
                 "consumerSecret": "7bbe074c8cee9d9d43fe6736414d3a82",
-                "callbackURL": "http://localhost:3000/auth/facebook/callback"
+                "callbackURL": "http://localhost:3000/auth/facebook/callback",
+                "profileFields": ["id", "displayName", "photos", "email", "likes"],
+                "enableProof": "true"
             },
             "instagram": {
                 "owner": "Daxi95",
