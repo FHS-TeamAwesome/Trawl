@@ -9,7 +9,7 @@ module.exports = Model.extend({
     authUrl: '/auth/facebook',
 
     url() {
-        return config.get('providers.facebook.api')+'/me?access_token='+accessToken;
+        return config.get('providers.facebook.api')+'/me?access_token=' + this.accessToken;
     },
 
     getAccessToken() {
