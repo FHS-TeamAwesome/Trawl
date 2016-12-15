@@ -28,9 +28,7 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
                     provider.auth.fetch().then(function() {
                         console.log(provider.auth);
 
-                        if(provider.getPhotos){
-                            provider.getPhotos();
-                        }
+                        provider.fetch();
 
                     });
                 });
