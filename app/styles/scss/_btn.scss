@@ -49,3 +49,19 @@
 .btn-instagram {
     @include btn(#8a3ab9);
 }
+
+.btn-login-container {
+    &.is-loggedin {
+        .btn-login {
+            display: none;
+        }
+
+        .btn-loggedin {
+            display: block;
+        }
+    }
+}
+
+.btn-loggedin {
+    display: none;
+}
