@@ -16,10 +16,14 @@ module.exports = Model.extend({
         return this.auth.isAuthenticated;
     },
 
-    getPhotos() {
+    fetch() {
+        this.fetchPhotos();
+    },
+
+    fetchPhotos() {
         this.photos = new Photos(this.auth.accessToken);
         this.photos.fetch().then(function (){
             console.log(this.photos);
-        });
+        }.bind(this));
     }
 });

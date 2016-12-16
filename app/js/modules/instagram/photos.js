@@ -40,18 +40,18 @@ module.exports = Collection.extend({
         //console.log(data);
         let photoArr = [];
 
-        for(let x in data.data ){
-            if(data.data[x].location !== null) {
+        for(let image in data.data ) {
+            if (data.data[image].location !== null) {
                 let photo = new Photo({
-                    locationName: data.data[x].location.name,
-                    latitude: data.data[x].location.latitude,
-                    longitude: data.data[x].location.longitude,
-                    url: data.data[x].images.standard_resolution.url
+                    locationName: data.data[image].location.name,
+                    latitude: data.data[image].location.latitude,
+                    longitude: data.data[image].location.longitude,
+                    url: data.data[image].images.standard_resolution.url
                 });
                 photoArr.push(photo);
             }
         }
-        //console.log(photoArr);
-        return data;
+
+        return photoArr;
     }
 });
