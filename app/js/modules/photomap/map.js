@@ -7,10 +7,10 @@ module.exports = Model.extend({
     overlay: [],
     map: null,
     zoomLevel: 9,
-    USGSOverlay.prototype: new google.maps.OverlayView();
+    //USGSOverlay.prototype: new google.maps.OverlayView();
 
     initialize(userPhotos) {
-        map = new google.maps.Map(document.getElementById('map'), {
+        /*map = new google.maps.Map(document.getElementById('map'), {
             zoom: zoomLevel,
             center: {lat: userPhotos[0].lat, lng: userPhotos[0].lng},
             mapTypeId: google.maps.MapTypeId.MAP
@@ -31,7 +31,7 @@ module.exports = Model.extend({
 
             overlay.push(new USGSOverlay(bounds[i],srcImage[i],map));
 
-        }
+        }*/
     }
 
 });
