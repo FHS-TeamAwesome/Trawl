@@ -58,7 +58,7 @@ module.exports = Model.extend({
     parse(data) {
         if (!data) return {};
 
-        this.isAuthenticated = !!data.created_at;
+        this.isAuthenticated = !!data.username;
 
         return data;
     }
