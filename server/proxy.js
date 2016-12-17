@@ -1,10 +1,10 @@
 var when = require('when');
 var config = require('config');
-var oauthProxy = require('./oauth-reverse-proxy');
+var oauthProxy = require('oauth-reverse-proxy');
 
 module.exports = function(app) {
     // twitter
-    app.use(oauthProxy({
+    app.use(oauthProxy.oauth1({
         endpoint: '/api/twitter/',
         target: config.get('Client.providers.twitter.api'),
         provider: function(req) {
@@ -18,18 +18,4 @@ module.exports = function(app) {
             });
         }
     }));
-
-    // app.use(oauthProxy({
-    //     endpoint: '/api/facebook/',
-    //     target: config.get('providers.facebook.api'),
-    //     provider: function(req) {
-    //         var user = req.user || {};
-            
-    //         return when({
-    //             consumerKey: config.get('providers.facebook.consumerKey'),
-    //             consumerSecret: config.get('providers.facebook.consumerSecret'),
-    //             facebookAccessToken: user.facebookAccessToken
-    //         });
-    //     }
-    // }));
 }
