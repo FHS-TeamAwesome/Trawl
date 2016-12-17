@@ -2,6 +2,7 @@
 
 import View from 'core/view';
 import HeaderSection from 'app/views/header-section';
+import MapsSection from 'app/views/maps-section';
 
 export default View.extend({
     initialize() {
@@ -21,6 +22,8 @@ export default View.extend({
     postRender() {
         // adding header section first
         this.addSection(new HeaderSection());
+
+        this.addSection(new MapsSection());
     },
 
     createLikesSection() {

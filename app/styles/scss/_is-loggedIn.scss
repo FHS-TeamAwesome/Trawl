@@ -1,0 +1,37 @@
+@keyframes disapear{
+    0%{
+        font-size: 18px;
+    }
+    100%{
+        font-size: 0px;
+    }
+}
+
+@keyframes appear{
+     0%{
+        font-size: 0px;
+    }
+    100%{
+        font-size: 18px;
+    }
+}
+
+//ICON
+.is-loggedin .btn .fa{
+    animation: disapear 2s;
+    animation-fill-mode: forwards;  
+}
+//TEXT
+.is-loggedin .btn{
+    animation: disapear 2s;
+    animation-fill-mode: forwards;  
+}
+
+.hidden{
+    display: none;
+}
+
+.appear{
+    animation: appear 2s;
+    animation-fill-mode: forwards;  
+}
