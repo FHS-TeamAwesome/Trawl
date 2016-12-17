@@ -17,12 +17,12 @@ module.exports = Model.extend({
     },
 
     fetch() {
-        this.fetchPhotos();
+        return this.fetchPhotos();
     },
 
     fetchPhotos() {
         this.photos = new Photos(this.auth.accessToken);
-        this.photos.fetch().then(function (){
+        this.photos.fetch().then(function(){
             console.log(this.photos);
         }.bind(this));
     }

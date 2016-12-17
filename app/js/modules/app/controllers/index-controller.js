@@ -1,5 +1,6 @@
 'use strict';
 
+import $ from 'jquery';
 import Controller from 'core/controller';
 import IndexView from 'app/views/index-view';
 
@@ -21,6 +22,12 @@ export default Controller.extend({
     },
 
     indexAction() {
-        this.setView(new IndexView());
+        $.when(
+            this.ProviderManager.fetchAuth('twitter'),
+            this.ProviderManager.fetchAuth('facebook'),
+            this.ProviderManager.fetchAuth('instagram')
+        ).always(function() {
+            this.setView(new IndexView());
+        }.bind(this));
     }
 });
