@@ -40,6 +40,7 @@ export default View.extend({
     },
 
     disableLoginBtn($btnContainer) {
+        
         $btnContainer.addClass('is-loggedin');
 
         let loginCount = 0;
