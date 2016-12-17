@@ -22,9 +22,7 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
         let provider = this.get(name);
 
         return this.openPopup(provider.auth.authUrl).then(function() {
-            return provider.auth.fetch(function() {
-                provider.fetch();
-            });
+            return this.fetchAuth(name);
         }.bind(this));
     }
 

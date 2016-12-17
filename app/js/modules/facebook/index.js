@@ -14,6 +14,7 @@ module.exports = Model.extend({
     },
 
     fetch() {
+        // replace following code with real fetch data
         return $.get('/auth/facebook/token').then(function(data) {
         
         }.bind(this));
