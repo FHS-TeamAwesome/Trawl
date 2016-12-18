@@ -11,6 +11,10 @@ export default View.extend({
         this.ProviderManager = this.getService('ProviderManager');
     },
 
+    postPlaceAt() {
+        this.EventDispatcher.on('fetched:instagram:photos', this.createMapSection.bind(this));
+    },
+
     addSection(section) {
         section.render().placeAt(this.$el);
         this.sections.push(section);
@@ -22,5 +26,12 @@ export default View.extend({
         
         this.addSection(new ChartView());
         this.addSection(new MapsSection());
+    },
+
+    createMapSection() {
+        var map = new MapsSection();
+        this.addSection(map);
+
+        map.createMap(this.ProviderManager.get('instagram').photos);
     }
 });
