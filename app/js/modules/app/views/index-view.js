@@ -12,6 +12,7 @@ export default View.extend({
 
     postPlaceAt() {
         this.EventDispatcher.on('fetched:twitter:likes', this.createLikesSection.bind(this));
+        this.EventDispatcher.on('fetched:instagram:photos', this.createMapSection.bind(this));
     },
 
     addSection(section) {
@@ -22,11 +23,16 @@ export default View.extend({
     postRender() {
         // adding header section first
         this.addSection(new HeaderSection());
-
-        this.addSection(new MapsSection());
     },
 
     createLikesSection() {
         console.log(this.ProviderManager.get('twitter').likes.toJSON());
+    },
+
+    createMapSection() {
+        var map = new MapsSection();
+        this.addSection(map);
+
+        map.createMap(this.ProviderManager.get('instagram').photos);
     }
 });

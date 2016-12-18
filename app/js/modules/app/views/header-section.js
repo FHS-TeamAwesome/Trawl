@@ -12,9 +12,9 @@ export default View.extend({
     },
 
     postRender() {
-        this.$el.on('click', '#twitter-avatar-btn:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
-        this.$el.on('click', '#facebook-avatar-btn:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
-        this.$el.on('click', '#instagram-avatar-btn:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
+        this.$el.on('click', '#twitter-login-container:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
+        this.$el.on('click', '#facebook-login-container:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
+        this.$el.on('click', '#instagram-login-container:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
     },
 
     postPlaceAt() {
@@ -25,7 +25,7 @@ export default View.extend({
     setBtnStates() {
         if (this.ProviderManager.get('twitter').isAuthenticated()) {
             this.ProviderManager.get('twitter').fetch();
-            this.disableLoginBtn(this.$el.find('#twitter-avatar-btn'));
+            this.disableLoginBtn(this.$el.find('#twitter-login-container'));
         }
 
         // if (this.ProviderManager.get('twitter').isAuthenticated()) {
@@ -35,7 +35,7 @@ export default View.extend({
 
         if (this.ProviderManager.get('instagram').isAuthenticated()) {
             // this.ProviderManager.get('instagram').fetch();
-            this.disableLoginBtn(this.$el.find('#instagram-avatar-btn'));
+            this.disableLoginBtn(this.$el.find('#instagram-login-container'));
         }
     },
 
@@ -68,27 +68,21 @@ export default View.extend({
         }
     },
 
-    twitterLoginHandler(event) {
-        let $btn = $(event.currentTarget);
-        
+    twitterLoginHandler() {
         this.ProviderManager.authenticate('twitter').then(function() {
-            this.disableLoginBtn($btn);
+            this.disableLoginBtn(this.$el.find('#twitter-login-container'));
         }.bind(this));
     },
 
-    facebookLoginHandler(event) {
-        let $btn = $(event.currentTarget);
-        
+    facebookLoginHandler() {
         this.ProviderManager.authenticate('facebook').then(function() {
-            this.disableLoginBtn($btn);
+            this.disableLoginBtn(this.$el.find('#facebook-login-container'));
         }.bind(this));
     },
   
-    instagramLoginHandler(event) {
-        let $btn = $(event.currentTarget);
-        
+    instagramLoginHandler() {
         this.ProviderManager.authenticate('instagram').then(function() {
-            this.disableLoginBtn($btn);
+            this.disableLoginBtn(this.$el.find('#instagram-login-container'));
         }.bind(this));
     }
 
