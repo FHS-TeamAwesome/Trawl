@@ -12,29 +12,25 @@ export default View.extend({
     },
 
     postRender() {
-        this.$el.on('click', '#twitter-login-container:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
-        this.$el.on('click', '#facebook-login-container:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
-        this.$el.on('click', '#instagram-login-container:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
+        this.$el.on('click', '#twitter-login:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
+        this.$el.on('click', '#facebook-login:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
+        this.$el.on('click', '#instagram-login:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
     },
 
     postPlaceAt() {
-        this.ProviderManager.fetchAuth('twitter').then(this.setBtnStates.bind(this));
-        this.ProviderManager.fetchAuth('instagram').then(this.setBtnStates.bind(this));
+        this.setBtnStates();
     },
 
     setBtnStates() {
         if (this.ProviderManager.get('twitter').isAuthenticated()) {
-            this.ProviderManager.get('twitter').fetch();
             this.disableLoginBtn(this.$el.find('#twitter-login-container'));
         }
 
-        // if (this.ProviderManager.get('twitter').isAuthenticated()) {
-        //     this.ProviderManager.get('twitter').fetch();
-        //     this.disableLoginBtn(this.$el.find('#facebook-avatar-btn'));
-        // }
+        if (this.ProviderManager.get('facebook').isAuthenticated()) {
+            this.disableLoginBtn(this.$el.find('#facebook-login-container'));
+        }
 
         if (this.ProviderManager.get('instagram').isAuthenticated()) {
-            // this.ProviderManager.get('instagram').fetch();
             this.disableLoginBtn(this.$el.find('#instagram-login-container'));
         }
     },
@@ -47,9 +43,11 @@ export default View.extend({
         if (this.ProviderManager.get('twitter').isAuthenticated()) {
             loginCount++;
         }
-        /*if (this.ProviderManager.get('facebook').isAuthenticated()) {
+        
+        if (this.ProviderManager.get('facebook').isAuthenticated()) {
             loginCount++;
-        }*/
+        }
+
         if (this.ProviderManager.get('instagram').isAuthenticated()) {
             loginCount++;
         }
@@ -57,12 +55,10 @@ export default View.extend({
         if(loginCount == 1) {
             $('.progress-bar').width('33%');
             $('.progress-bar').css("background-color", "#f63a0f");
-        }
-        else if(loginCount == 2) {
+        } else if(loginCount == 2) {
             $('.progress-bar').width('66%');
             $('.progress-bar').css("background-color", "#f2b01e");
-        }
-        else if(loginCount == 3) {
+        } else if(loginCount == 3) {
             $('.progress-bar').width('100%');
             $('.progress-bar').css("background-color", "#86e01e");
         }
@@ -85,6 +81,4 @@ export default View.extend({
             this.disableLoginBtn(this.$el.find('#instagram-login-container'));
         }.bind(this));
     }
-
-
 });

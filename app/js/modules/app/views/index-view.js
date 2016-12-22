@@ -3,6 +3,7 @@
 import View from 'core/view';
 import HeaderSection from 'app/views/header-section';
 import MapsSection from 'app/views/maps-section';
+import ChartView from 'app/views/chart-view';
 
 export default View.extend({
     initialize() {
@@ -11,7 +12,6 @@ export default View.extend({
     },
 
     postPlaceAt() {
-        this.EventDispatcher.on('fetched:twitter:likes', this.createLikesSection.bind(this));
         this.EventDispatcher.on('fetched:instagram:photos', this.createMapSection.bind(this));
     },
 
@@ -23,10 +23,9 @@ export default View.extend({
     postRender() {
         // adding header section first
         this.addSection(new HeaderSection());
-    },
-
-    createLikesSection() {
-        console.log(this.ProviderManager.get('twitter').likes.toJSON());
+        
+        this.addSection(new ChartView());
+        this.addSection(new MapsSection());
     },
 
     createMapSection() {
