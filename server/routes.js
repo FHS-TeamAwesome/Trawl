@@ -37,17 +37,25 @@ module.exports = function(app, passport) {
         failureRedirect : '/auth/fail'
     }));
 
-    app.get('/auth/facebook/token', function(req, res) {
+    function getTokenHandler(req, res, tokenKey) {
         var user = req.user || {};
 
         res.setHeader('Content-Type', 'application/json');
 
-        if (!user.facebookAccessToken) {
+        if (!user[tokenKey]) {
             res.send(401, JSON.stringify({ message: 'No token!' }));
             return;
         }
 
-        res.send(200, JSON.stringify({ token: req.user.facebookAccessToken }));
+        res.send(200, JSON.stringify({ token: req.user[tokenKey] }));
+    }
+
+    app.get('/auth/twitter/token', function(req, res) {
+        getTokenHandler(req, res, 'twitterAccessToken');
+    });
+
+    app.get('/auth/facebook/token', function(req, res) {
+        getTokenHandler(req, res, 'facebookAccessToken');
     });
 
     // route for instagram authentication and login
@@ -60,15 +68,6 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/auth/instagram/token', function(req, res) {
-        var user = req.user || {};
-
-        res.setHeader('Content-Type', 'application/json');
-
-        if (!user.instagramAccessToken) {
-            res.send(401, JSON.stringify({ message: 'No token!' }));
-            return;
-        }
-
-        res.send(200, JSON.stringify({ token: user.instagramAccessToken }));
+        getTokenHandler(req, res, 'instagramAccessToken');
     });
 };
