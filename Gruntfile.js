@@ -1,8 +1,7 @@
 'use strict';
 
-var fs = require('fs');
-var serveStatic = require('serve-static');
 var configify = require('config-browserify');
+var config = require('config');
 
 module.exports = function(grunt) {
 
@@ -15,42 +14,6 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         paths: pathsConfig,
-
-        open: {
-            server: {
-                url: 'http://localhost:<%= connect.server.options.port %>'
-            }
-        },
-
-        connect: {
-            server: {
-                options: {
-                    port: 9000,
-                    hostname: '0.0.0.0',
-                    base: '<%= paths.app %>',
-                    middleware: function(connect, options) {
-                        const middlewares = [];
-
-                        if (!Array.isArray(options.base)) {
-                            options.base = [options.base];
-                        }
-
-                        options.base.forEach(function(base) {
-                            middlewares.push(serveStatic(base));
-                        });
-
-                        // default: index.html
-                        middlewares.push(function(req, res) {
-                          fs
-                            .createReadStream(`${options.base}/index.html`)
-                            .pipe(res);
-                        });
-                        
-                        return middlewares;
-                    }
-                }
-            }
-        },
 
         sass: {
             options: {
@@ -131,5 +94,5 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('build', ['jshint', 'clean', 'browserify', 'sass', 'copy']);
-    grunt.registerTask('serve', ['build', 'connect:server', 'open','watch']);
+    grunt.registerTask('serve', ['build', 'watch']);
 };
