@@ -11,10 +11,14 @@ Code is licensed under ISC. Content is licensed under CC-BY-SA 3.0. See the LICE
 
 After cloning this repo you need to run `npm install` to install all the needed dependencies.
 
-
-## Grunt Commands
-
+## First start the Node Server in an own terminal instance:
 ```bash          
-    grunt serve             starts a lightweight server and opens the app inside your browser
+    npm start:dev
+```
+
+## Grunt Commands 
+```bash          
+    grunt serve             starts a watch task for js and scss changes
     grunt build             builds all files for deployment
 ```
+
