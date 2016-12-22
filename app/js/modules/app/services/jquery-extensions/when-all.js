@@ -1,5 +1,7 @@
 'use strict';
 
+/* jshint ignore:start */
+
 import $ from 'jquery';
 
 var slice = [].slice;
