@@ -87,7 +87,7 @@ export default View.extend({
         a.href = this.image_;
 
         var div = document.createElement('div');
-        var name = "photo";
+        var name = 'photo';
         div.setAttribute("class", name);
         div.style.borderStyle = 'none';
         div.style.borderWidth = '0px';

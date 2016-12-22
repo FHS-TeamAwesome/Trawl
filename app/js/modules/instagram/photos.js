@@ -31,8 +31,6 @@ module.exports = Collection.extend({
 
         for(let image in data.data ) {
 
-            //console.log(data.data[image].likes);
-
             if (data.data[image].location !== null) {
                 let photo = new Photo({
                     locationName: data.data[image].location.name,
