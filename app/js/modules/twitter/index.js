@@ -15,8 +15,6 @@ module.exports = Model.extend({
     },
 
     fetch() {
-        return this.likes.fetch().then(function() {
-            this.EventDispatcher.trigger('fetched:twitter:likes');
-        }.bind(this));
+        return this.likes.fetch();
     }
 });

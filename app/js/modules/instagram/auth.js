@@ -23,7 +23,6 @@
 import $ from 'jquery';
 import config from 'config';
 import Model from 'core/model';
-import Backbone from 'backbone';
 
 module.exports = Model.extend({
     isAuthenticated: false,
@@ -32,21 +31,10 @@ module.exports = Model.extend({
 
     authUrl: '/auth/instagram',
 
+    reqDataType: 'jsonp',
+
     url() {
         return config.get('Client.providers.instagram.api') + '/users/self/?access_token=' + this.accessToken;
-    },
-
-    sync : function(method, collection, options) {
-        // By setting the dataType to "jsonp", jQuery creates a function
-        // and adds it as a callback parameter to the request, e.g.:
-        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
-        // If you want another name for the callback, also specify the
-        // jsonpCallback option.
-        // After this function is called (by the JSONP response), the script tag
-        // is removed and the parse method is called, just as it would be
-        // when AJAX was used.
-        options.dataType = "jsonp";
-        return Backbone.sync(method, collection, options);
     },
 
     getAccessToken() {
@@ -55,10 +43,22 @@ module.exports = Model.extend({
         }.bind(this));
     },
 
+    fetch() {
+        let originalfetch = Model.prototype.fetch;
+
+        if (!this.accessToken) {
+            return this.getAccessToken().then(function() {
+                return originalfetch.call(this);
+            }.bind(this));
+        }
+
+        return originalfetch.call(this);
+    },
+
     parse(data) {
         if (!data) return {};
 
-        this.isAuthenticated = !!data.username;
+        this.isAuthenticated = !!data.data.id;
 
         return data;
     }

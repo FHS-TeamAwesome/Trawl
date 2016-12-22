@@ -14,18 +14,25 @@ module.exports = function(passport) {
         done(null, user);
     });
 
+    function extendSessionData(sessionObj, data) {
+        sessionObj = sessionObj || {};
+        
+        return Object.assign(sessionObj, data);
+    }
+
     // Twitter OAuth login
     passport.use(new TwitterStrategy({
         consumerKey: config.get('Client.providers.twitter.consumerKey'),
         consumerSecret: config.get('Client.providers.twitter.consumerSecret'),
-        callbackURL: config.get('Client.providers.twitter.callbackURL')
-    }, function(accessToken, accessTokenSecret, profile, done) {
+        callbackURL: config.get('Client.providers.twitter.callbackURL'),
+        passReqToCallback: true
+    }, function(req, accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
-            done(null, {
+            done(null, extendSessionData(req.user, {
                 twitterId: profile.id,
                 twitterAccessToken: accessToken,
                 twitterAccessTokenSecret: accessTokenSecret
-            });
+            }));
         }); 
     }));
 
@@ -35,14 +42,15 @@ module.exports = function(passport) {
         clientSecret: config.get('Client.providers.facebook.consumerSecret'),
         callbackURL: config.get('Client.providers.facebook.callbackURL'),
         profileFields: config.get('Client.providers.facebook.profileFields'),
-        enableProof: config.get('Client.providers.facebook.enableProof')
-    }, function(accessToken, accessTokenSecret, profile, done) {
+        enableProof: config.get('Client.providers.facebook.enableProof'),
+        passReqToCallback: true
+    }, function(req, accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
-            done(null, {
+            done(null, extendSessionData(req.user, {
                 facebookId: profile.id,
                 facebookAccessToken: accessToken,
                 facebookAccessTokenSecret: accessTokenSecret
-            });
+            }));
         });
     }));
 
@@ -50,14 +58,15 @@ module.exports = function(passport) {
     passport.use(new InstagramStrategy({
         clientID: config.get('Client.providers.instagram.consumerKey'),
         clientSecret: config.get('Client.providers.instagram.consumerSecret'),
-        callbackURL: config.get('Client.providers.instagram.callbackURL')
-      }, function(accessToken, accessTokenSecret, profile, done) {
+        callbackURL: config.get('Client.providers.instagram.callbackURL'),
+        passReqToCallback: true
+    }, function(req, accessToken, accessTokenSecret, profile, done) {
         process.nextTick(function() {
-            done(null, {
+            done(null, extendSessionData(req.user, {
                 instagramId: profile.id,
                 instagramAccessToken: accessToken,
                 instagramAccessTokenSecret: accessTokenSecret
-            });
+            }));
         });
     }));
 };
