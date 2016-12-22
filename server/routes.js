@@ -43,7 +43,11 @@ module.exports = function(app, passport) {
         res.setHeader('Content-Type', 'application/json');
 
         if (!user[tokenKey]) {
-            res.send(401, JSON.stringify({ message: 'No token!' }));
+            res.send(401, JSON.stringify({ 
+                error: {
+                    message: 'Unauthorized!'
+                } 
+            }));
             return;
         }
 
