@@ -30,6 +30,7 @@ module.exports = Collection.extend({
         let photoArr = [];
 
         for(let image in data.data ) {
+
             if (data.data[image].location !== null) {
                 let photo = new Photo({
                     locationName: data.data[image].location.name,

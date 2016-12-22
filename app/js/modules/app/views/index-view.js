@@ -25,7 +25,6 @@ export default View.extend({
         this.addSection(new HeaderSection());
         
         this.addSection(new ChartView());
-        this.addSection(new MapsSection());
     },
 
     createMapSection() {
