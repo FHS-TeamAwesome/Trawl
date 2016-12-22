@@ -17,6 +17,7 @@
     border: 2px solid transparent;
     color: #fff;
     padding: 10px 15px;
+    border-radius: 10px;
 
     &:active,
     &:focus {
@@ -50,18 +51,41 @@
     @include btn(#8a3ab9);
 }
 
-.btn-login-container {
-    &.is-loggedin {
-        .btn-login {
-            display: none;
-        }
+@keyframes hide{
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
 
-        .btn-loggedin {
-            display: block;
-        }
+@keyframes appear{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.btn-login-container {
+    .btn-loggedin {
+        opacity: 0;
     }
 }
 
-.btn-loggedin {
-    display: none;
+.btn-login-container {
+    &.is-loggedin {
+
+        .btn-login {
+            animation-name:hide;
+            animation-duration:2s;
+            animation-timing-function:linear;
+            animation-iteration-count:1;
+            animation-fill-mode: forwards;
+            }
+
+        .btn-loggedin {
+            animation-name:appear;
+            animation-duration:2s;
+            animation-timing-function:linear;
+            animation-iteration-count:1;
+            animation-fill-mode: forwards;
+            animation-delay: 2s;
+
+        }
+    }
 }

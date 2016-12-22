@@ -1,5 +1,5 @@
 .page-header {
-    background: url("/img/header-bg.jpg") center center;
+    background: url("/img/header-bg.png") center center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -24,7 +24,9 @@
 }
 
 .page-header-description {
-    margin-bottom: 30px;
+    border: 1px solid white;
+    background: rgba(200,200,200,0.4);
+    margin-bottom: 70px;
 }
 
 .page-section-content {

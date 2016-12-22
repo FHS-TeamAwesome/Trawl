@@ -6,8 +6,6 @@ import Photos from 'instagram/photos';
 
 module.exports = Model.extend({
 
-    userPhotos: null,
-
     initialize() {
         this.auth = new Auth();
     },
@@ -17,13 +15,13 @@ module.exports = Model.extend({
     },
 
     fetch() {
-        this.fetchPhotos();
+        return this.fetchPhotos();
     },
 
     fetchPhotos() {
         this.photos = new Photos(this.auth.accessToken);
-        this.photos.fetch().then(function (){
-            console.log(this.photos);
+        return this.photos.fetch().then(function (){
+            this.EventDispatcher.trigger('fetched:instagram:photos');
         }.bind(this));
     }
 });
