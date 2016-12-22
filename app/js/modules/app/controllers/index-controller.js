@@ -22,7 +22,7 @@ export default Controller.extend({
     },
 
     indexAction() {
-        $.when(
+        $.whenAll(
             this.ProviderManager.fetchAuth('twitter'),
             this.ProviderManager.fetchAuth('facebook'),
             this.ProviderManager.fetchAuth('instagram')
