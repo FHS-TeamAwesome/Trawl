@@ -2,9 +2,7 @@
 
 import $ from 'jquery';
 import View from 'core/view';
-
-var GoogleMapsLoader = require('google-maps');
-var Lightbox = require('lightbox2');
+import GoogleMapsLoader from 'google-maps';
 
 let MapsTpl = require('app/templates/partials/maps.html');
 
@@ -21,6 +19,10 @@ export default View.extend({
         GoogleMapsLoader.LANGUAGE = 'de';
     },
 
+    postPlaceAt() {
+        window.addEventListener('resize', this.changeSize.bind(this));
+    },
+
     createMap(data) {
         if(!data || data.length < 1)
             return;
@@ -29,6 +31,10 @@ export default View.extend({
 
             var options = {
                 zoom: this.zoomLevel,
+                scrollwheel: false,
+                navigationControl: false,
+                mapTypeControl: false,
+                scaleControl: false,
                 center: {lat: data.models[0].attributes.latitude, lng: data.models[0].attributes.longitude},
                 mapTypeId: google.maps.MapTypeId.MAP
             };
@@ -40,7 +46,7 @@ export default View.extend({
             this.USGSOverlay.prototype.draw = this.USGSOverlayDraw;
             this.USGSOverlay.prototype.onRemove = this.USGSOverlayOnRemove;
 
-            this.map.addListener('zoom_changed', this.onZoom.bind(this));
+            this.map.addListener('zoom_changed', this.changeSize.bind(this));
 
             var bounds = [];
             var srcImage = [];
@@ -54,6 +60,8 @@ export default View.extend({
 
                 this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
             }
+
+            //this.changeSize();
 
         }.bind(this));
     },
@@ -77,11 +85,9 @@ export default View.extend({
     USGSOverlayOnAdd() {
         var a = document.createElement('a');
         a.href = this.image_;
-        a.setAttribute("data-lightbox","image-1");
-        a.setAttribute("data-title","Blabla");
 
         var div = document.createElement('div');
-        var name = "insta_photo";
+        var name = 'photo';
         div.setAttribute("class", name);
         div.style.borderStyle = 'none';
         div.style.borderWidth = '0px';
@@ -89,6 +95,7 @@ export default View.extend({
 
         // Create the img element and attach it to the div.
         var img = document.createElement('img');
+        img.classList.add('lightbox-target');
         img.src = this.image_;
         img.style.width = '100%';
         img.style.height = '100%';
@@ -133,9 +140,9 @@ export default View.extend({
         this.div_ = null;
     },
 
-    onZoom() {
+    changeSize() {
         var width = (this.map.getBounds().b.f - this.map.getBounds().b.b)/8;
-        var height = (this.map.getBounds().f.b - this.map.getBounds().f.f)/8;
+        var height = (this.map.getBounds().f.b - this.map.getBounds().f.f)/(8/(this.$el.find('.map').width()/this.$el.find('.map').height()));
         var widthDifference = 0, heightDifference = 0;
 
         for(var i = 0; i < this.overlay.length; i++)
