@@ -9,6 +9,7 @@ let ChartTpl = require('app/templates/partials/chart.html');
 export default View.extend({
     initialize() {
         this.template = ChartTpl;
+        this.DataProcessor = this.getService('DataProcessor');
     },
 
     postPlaceAt() {
@@ -16,6 +17,9 @@ export default View.extend({
     },
 
     createChart() {
+
+        this.DataProcessor.getHashtags();
+
         let chart = c3.generate({
             bindto: '#chart',
             data: {
