@@ -18,73 +18,68 @@ export default View.extend({
     },
 
     postPlaceAt() {
+        this.$twitterLoginContainer = this.$el.find('#twitter-login-container');
+        this.$facebookLoginContainer = this.$el.find('#facebook-login-container');
+        this.$instagramLoginContainer = this.$el.find('#instagram-login-container');
+
         this.setBtnStates();
+        this.updateProgressBar();
     },
 
     setBtnStates() {
         if (this.ProviderManager.get('twitter').isAuthenticated()) {
-            this.disableLoginBtn(this.$el.find('#twitter-login-container'));
+            this.disableLoginBtn(this.$twitterLoginContainer);
+            this.setAuthData(this.ProviderManager.get('twitter').auth, this.$twitterLoginContainer);
         }
 
         if (this.ProviderManager.get('facebook').isAuthenticated()) {
-            this.disableLoginBtn(this.$el.find('#facebook-login-container'));
+            console.log(this.ProviderManager.get('facebook').auth);
+            this.disableLoginBtn(this.$facebookLoginContainer);
+            this.setAuthData(this.ProviderManager.get('facebook').auth, this.$facebookLoginContainer);
         }
 
         if (this.ProviderManager.get('instagram').isAuthenticated()) {
-            this.disableLoginBtn(this.$el.find('#instagram-login-container'));
+            this.disableLoginBtn(this.$instagramLoginContainer);
+            this.setAuthData(this.ProviderManager.get('instagram').auth, this.$instagramLoginContainer);
         }
     },
 
+    setAuthData(auth, $loginContainer) {
+        let $btnLoggedin = $loginContainer.find('.btn-loggedin');
+
+        $btnLoggedin.find('.btn-loggedin-name').html(auth.getName());
+        $btnLoggedin.find('.btn-loggedin-avatar img').attr('src', auth.getAvatar());
+    },
+
     disableLoginBtn($btnContainer) {
-        
         $btnContainer.addClass('is-loggedin');
-
-        let loginCount = 0;
-
-        if (this.ProviderManager.get('twitter').isAuthenticated()) {
-            loginCount++;
-
-            $btnContainer.children('btn-loggedin').addClass('btn-twitter','btn');
-        }
-        
-        if (this.ProviderManager.get('facebook').isAuthenticated()) {
-            loginCount++;
-
-            $btnContainer.children().addClass('btn-loggedin');
-        }
-        
-        if (this.ProviderManager.get('instagram').isAuthenticated()) {
-            loginCount++;
-            $btnContainer.children().addClass('btn-instagram','btn');
-        }
-
-        if(loginCount == 1) {
-            $('.progress-bar').width('33%');
-            $('.progress-bar').css("background-color", "#f63a0f");
-        } else if(loginCount == 2) {
-            $('.progress-bar').width('66%');
-            $('.progress-bar').css("background-color", "#f2b01e");
-        } else if(loginCount == 3) {
-            $('.progress-bar').width('100%');
-            $('.progress-bar').css("background-color", "#86e01e");
-        }
     },
 
     twitterLoginHandler() {
         this.ProviderManager.authenticate('twitter').then(function() {
-            this.disableLoginBtn(this.$el.find('#twitter-login-container'));
+            this.disableLoginBtn(this.$twitterLoginContainer);
+            this.setAuthData(this.ProviderManager.get('twitter').auth, this.$twitterLoginContainer);
+            this.updateProgressBar();
         }.bind(this));
     },
 
     facebookLoginHandler() {
         this.ProviderManager.authenticate('facebook').then(function() {
-            this.disableLoginBtn(this.$el.find('#facebook-login-container'));
+            this.disableLoginBtn(this.$facebookLoginContainer);
+            this.setAuthData(this.ProviderManager.get('facebook').auth, this.$facebookLoginContainer);
+            this.updateProgressBar();
         }.bind(this));
     },
   
     instagramLoginHandler() {
         this.ProviderManager.authenticate('instagram').then(function() {
-            this.disableLoginBtn(this.$el.find('#instagram-login-container'));
+            this.disableLoginBtn(this.$instagramLoginContainer);
+            this.setAuthData(this.ProviderManager.get('instagram').auth, this.$instagramLoginContainer);
+            this.updateProgressBar();
         }.bind(this));
+    },
+
+    updateProgressBar() {
+        this.$el.find('.progress-bar').width(this.ProviderManager.getProgress() + '%');
     }
 });

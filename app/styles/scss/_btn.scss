@@ -17,7 +17,6 @@
     border: 2px solid transparent;
     color: #fff;
     padding: 10px 15px;
-    border-radius: 10px;
 
     &:active,
     &:focus {
@@ -25,9 +24,7 @@
     }
 }
 
-.btn-facebook,
-.btn-twitter,
-.btn-instagram {
+.btn-login {
     width: 100%;
 
     .fa {
@@ -40,52 +37,82 @@
 }
 
 .btn-facebook {
-    @include btn(#3B5998);
+    .btn-login {
+        @include btn(#3B5998);
+    }
+
+    &.is-loggedin {
+        .btn-loggedin {
+            background: darken(#3B5998, 10%);
+        }
+    }
 }
 
 .btn-twitter {
-    @include btn(#55acee);
+    .btn-login {
+        @include btn(#55acee);
+    }
+
+    &.is-loggedin {
+        .btn-loggedin {
+            background: darken(#55acee, 10%);
+        }
+    }
 }
 
 .btn-instagram {
-    @include btn(#8a3ab9);
-}
-
-@keyframes hide{
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-@keyframes appear{
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-.btn-login-container {
-    .btn-loggedin {
-        opacity: 0;
+    .btn-login {
+        @include btn(#8a3ab9);
     }
-}
 
-.btn-login-container {
     &.is-loggedin {
-
-        .btn-login {
-            animation-name:hide;
-            animation-duration:2s;
-            animation-timing-function:linear;
-            animation-iteration-count:1;
-            animation-fill-mode: forwards;
-            }
-
         .btn-loggedin {
-            animation-name:appear;
-            animation-duration:2s;
-            animation-timing-function:linear;
-            animation-iteration-count:1;
-            animation-fill-mode: forwards;
-            animation-delay: 2s;
-
+            background: darken(#8a3ab9, 10%);
         }
     }
+}
+
+.btn-loggedin {
+    position: absolute;
+    width: 100%;
+    left: -100%;
+    top: 0;
+    height: 100%;
+    background-color: #bada55;
+    transition: left 0.8s ease-in-out;
+    text-align: left;
+}
+
+.btn-login-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+
+    &.is-loggedin {
+        .btn-loggedin {
+            left: 0;
+        }
+    }
+}
+
+.btn-loggedin-avatar {
+    display: inline-block;
+    position: relative;
+    top: 7px;
+    margin: 0px 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: solid 2px #fff;
+
+    & > img {
+        width: 32px;
+        height: 32px;
+        background: #e5e5e5;
+    }
+}
+
+.btn-loggedin-name {
+    display: inline-block;
+    position: relative;
+    top: -6px;
 }
