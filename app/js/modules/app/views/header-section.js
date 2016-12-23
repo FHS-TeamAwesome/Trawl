@@ -36,6 +36,7 @@ export default View.extend({
             console.log(this.ProviderManager.get('facebook').auth);
             this.disableLoginBtn(this.$facebookLoginContainer);
             this.setAuthData(this.ProviderManager.get('facebook').auth, this.$facebookLoginContainer);
+            //console.log(this.ProviderManager.get('facebook').feeds.getHashTags());
         }
 
         if (this.ProviderManager.get('instagram').isAuthenticated()) {
