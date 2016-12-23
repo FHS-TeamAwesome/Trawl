@@ -61,5 +61,13 @@ module.exports = Model.extend({
         this.isAuthenticated = !!data.data.id;
 
         return data;
+    },
+
+    getName() {
+        return this.get('data').username;
+    },
+
+    getAvatar() {
+        return this.get('data').profile_picture;
     }
 });

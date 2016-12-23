@@ -126,5 +126,13 @@ module.exports = Model.extend({
         this.isAuthenticated = !!data.created_at;
 
         return data;
+    },
+
+    getName() {
+        return this.get('name');
+    },
+
+    getAvatar() {
+        return this.get('profile_image_url');
     }
 });
