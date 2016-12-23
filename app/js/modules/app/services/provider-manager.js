@@ -5,17 +5,31 @@ import ServiceLocator from 'core/service-locator';
 
 ServiceLocator.create('ProviderManager', class ProviderManager {
     constructor() {
-        this.providers = {};
+        this.providers = [];
+        this.providersByName = {};
     }
 
     add(name, provider) {
-        this.providers[name] = provider;
+        this.providersByName[name] = provider;
+        this.providers.push(provider);
 
         return this;
     }
 
     get(name) {
-        return this.providers[name];
+        return this.providersByName[name];
+    }
+
+    getProgress() {
+        let progress = 0;
+
+        for (let provider of this.providers) {
+            if (provider.isAuthenticated()) {
+                progress += 100 / this.providers.length;
+            }
+        }
+
+        return progress;
     }
 
     authenticate(name) {
