@@ -2,6 +2,7 @@
 
 import Collection from 'core/collection';
 import Feed from 'facebook/feed';
+import config from 'config';
 
 module.exports = Collection.extend({
     model: Feed,
