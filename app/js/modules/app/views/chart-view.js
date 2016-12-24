@@ -17,7 +17,6 @@ export default View.extend({
     },
 
     createChart() {
-
         this.DataProcessor.getHashtags();
 
         let chart = c3.generate({

@@ -10,7 +10,6 @@ ServiceLocator.create('DataProcessor', class DataProcessor {
     }
 
     getHashtags() {
-
         let hashtags = [];
 
         if (this.ProviderManager.get('twitter').isAuthenticated() && this.ProviderManager.get('twitter').getHashtags) {
@@ -26,7 +25,7 @@ ServiceLocator.create('DataProcessor', class DataProcessor {
         }
 
         //create total
-
+        
         return {
             instagram: [],
             twitter: [],
