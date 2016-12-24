@@ -35,7 +35,7 @@ export default View.extend({
                 navigationControl: false,
                 mapTypeControl: false,
                 scaleControl: false,
-                center: {lat: data.models[0].attributes.latitude, lng: data.models[0].attributes.longitude},
+                center: {lat: data[0].latitude, lng: data[0].longitude},
                 mapTypeId: google.maps.MapTypeId.MAP
             };
 
@@ -53,10 +53,10 @@ export default View.extend({
 
             for(var i = 0; i < data.length; i++) {
                 bounds.push(new google.maps.LatLngBounds(
-                    new google.maps.LatLng(data.models[i].attributes.latitude - 0.065, data.models[i].attributes.longitude - 0.1),
-                    new google.maps.LatLng(data.models[i].attributes.latitude + 0.065, data.models[i].attributes.longitude + 0.1)));
+                    new google.maps.LatLng(data[i].latitude - 0.065, data[i].longitude - 0.1),
+                    new google.maps.LatLng(data[i].latitude + 0.065, data[i].longitude + 0.1)));
 
-                srcImage.push(data.models[i].attributes.url);
+                srcImage.push(data[i].url);
 
                 this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
             }

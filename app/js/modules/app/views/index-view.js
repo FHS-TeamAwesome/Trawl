@@ -23,14 +23,22 @@ export default View.extend({
     postRender() {
         // adding header section first
         this.addSection(new HeaderSection());
-        
-        this.addSection(new ChartView());
+
+        if (this.ProviderManager.get('instagram').isAuthenticated()) {
+            this.createMapSection();
+        }
+
+        if (this.ProviderManager.get('instagram').isAuthenticated() ||
+            this.ProviderManager.get('twitter').isAuthenticated() ||
+            this.ProviderManager.get('facebook').isAuthenticated()) {
+            this.addSection(new ChartView());
+        }
     },
 
     createMapSection() {
         var map = new MapsSection();
         this.addSection(map);
 
-        map.createMap(this.ProviderManager.get('instagram').photos);
+        map.createMap(this.ProviderManager.get('instagram').photos.getPhotosWithLocation());
     }
 });
