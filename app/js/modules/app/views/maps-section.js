@@ -3,6 +3,7 @@
 import $ from 'jquery';
 import View from 'core/view';
 import GoogleMapsLoader from 'google-maps';
+import MapsOverviewContainer from 'app/views/maps-overview-container-view';
 
 let MapsTpl = require('app/templates/partials/maps.html');
 
@@ -23,9 +24,19 @@ export default View.extend({
         window.addEventListener('resize', this.changeSize.bind(this));
     },
 
+    postRender() {
+
+    },
+
+    createMapOverview(data) {
+        (new MapsOverviewContainer(data)).render().placeAt(this.$el.find('.map-overview'));
+    },
+
     createMap(data) {
         if(!data || data.length < 1)
             return;
+
+        this.createMapOverview(data);
 
         GoogleMapsLoader.load(function(google) {
 
