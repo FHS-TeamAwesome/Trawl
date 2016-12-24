@@ -29,14 +29,12 @@ export default View.extend({
     },
 
     createMapOverview(data) {
-        (new MapsOverviewContainer(data)).render().placeAt(this.$el.find('.map-overview'));
+        (new MapsOverviewContainer(data, this.map)).render().placeAt(this.$el.find('.map-overview'));
     },
 
     createMap(data) {
         if(!data || data.length < 1)
             return;
-
-        this.createMapOverview(data);
 
         GoogleMapsLoader.load(function(google) {
 
@@ -72,6 +70,7 @@ export default View.extend({
                 this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
             }
 
+            this.createMapOverview(data);
             //this.changeSize();
 
         }.bind(this));

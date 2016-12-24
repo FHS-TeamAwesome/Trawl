@@ -8,10 +8,12 @@ export default View.extend({
 
     tagName: 'ul',
     mediaObjects: null,
+    map: null,
 
-    initialize(data) {
+    initialize(data, map) {
         this.$el.addClass('maps-overview-container');
         this.mediaObjects = data;
+        this.map = map;
     },
 
     postRender() {
@@ -21,7 +23,7 @@ export default View.extend({
     },
 
     addMediaDetail(mediaObject) {
-        (new MapsOverviewDetail(mediaObject)).render().placeAt(this.$el);
+        (new MapsOverviewDetail(mediaObject, this.map)).render().placeAt(this.$el);
     }
 
 });

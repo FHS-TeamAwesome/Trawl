@@ -9,14 +9,15 @@ export default View.extend({
 
     tagName: 'li',
     mediaObject: null,
+    map: null,
 
-    initialize(data) {
+    initialize(data, map) {
         this.template = MapsOverviewDetailTpl;
         this.mediaObject = data;
+        this.map = map;
     },
 
     postPlaceAt() {
-        console.log(this.mediaObject);
         this.$el.find('.media-picture').attr('src',this.mediaObject.url);
 
         let mediaDescription = this.$el.find('.media-description');
@@ -25,11 +26,19 @@ export default View.extend({
         mediaDescription.append('Hashtags: ');
         for(let i = 0; i < this.mediaObject.hashtags.length; i++) {
             if(i-1 != this.mediaObject.hashtags.length)
-                mediaDescription.append(this.mediaObject.hashtags[i] + ', ');
+                mediaDescription.append('#' + this.mediaObject.hashtags[i] + ', ');
             else
-                mediaDescription.append(this.mediaObject.hashtags[i]);
+                mediaDescription.append('#' + this.mediaObject.hashtags[i]);
         }
         mediaDescription.append('</p>');
+
+        this.$el.click(function() {
+            this.setLocation();
+        }.bind(this));
+    },
+
+    setLocation() {
+        this.map.setCenter(new google.maps.LatLng(this.mediaObject.latitude, this.mediaObject.longitude));
     }
 
 });
