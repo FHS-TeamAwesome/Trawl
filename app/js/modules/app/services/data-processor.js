@@ -25,13 +25,13 @@ ServiceLocator.create('DataProcessor', class DataProcessor {
         }
 
         //create total
-        
+
         return {
             instagram: [],
             twitter: [],
             facebook: [],
             total: []
-        }
+        };
     }
 
 });
