@@ -10,10 +10,10 @@ export default View.extend({
     mediaObjects: null,
     map: null,
 
-    initialize(data, map) {
+    initialize(data) {
         this.$el.addClass('maps-overview-container');
-        this.mediaObjects = data;
-        this.map = map;
+        this.mediaObjects = data.data;
+        this.map = data.map;
     },
 
     postRender() {
@@ -23,7 +23,12 @@ export default View.extend({
     },
 
     addMediaDetail(mediaObject) {
-        (new MapsOverviewDetail(mediaObject, this.map)).render().placeAt(this.$el);
+        let dataMapsObj = {
+            mediaObject: mediaObject,
+            map: this.map
+        };
+
+        (new MapsOverviewDetail(dataMapsObj)).render().placeAt(this.$el);
     }
 
 });

@@ -2,6 +2,7 @@
 
 import $ from 'jquery';
 import View from 'core/view';
+import GoogleMapsLoader from 'google-maps';
 
 let MapsOverviewDetailTpl = require('app/templates/partials/maps-overview-detail.html');
 
@@ -11,10 +12,10 @@ export default View.extend({
     mediaObject: null,
     map: null,
 
-    initialize(data, map) {
+    initialize(data) {
         this.template = MapsOverviewDetailTpl;
-        this.mediaObject = data;
-        this.map = map;
+        this.mediaObject = data.mediaObject;
+        this.map = data.map;
     },
 
     postPlaceAt() {
@@ -38,7 +39,7 @@ export default View.extend({
     },
 
     setLocation() {
-        this.map.setCenter(new google.maps.LatLng(this.mediaObject.latitude, this.mediaObject.longitude));
+        this.map.setCenter({lat: this.mediaObject.latitude, lng: this.mediaObject.longitude});
     }
 
 });

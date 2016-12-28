@@ -29,7 +29,12 @@ export default View.extend({
     },
 
     createMapOverview(data) {
-        (new MapsOverviewContainer(data, this.map)).render().placeAt(this.$el.find('.map-overview'));
+        let dataMapsObj = {
+            data: data,
+            map: this.map
+        };
+
+        (new MapsOverviewContainer(dataMapsObj)).render().placeAt(this.$el.find('.map-overview'));
     },
 
     createMap(data) {
