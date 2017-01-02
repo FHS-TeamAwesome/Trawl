@@ -26,22 +26,66 @@ module.exports = Collection.extend({
     parse(data) {
         if (!data) return {};
 
-        //console.log(data);
         let photoArr = [];
 
         for(let image in data.data ) {
-
+            let photo;
             if (data.data[image].location !== null) {
-                let photo = new Photo({
+                photo = new Photo({
                     locationName: data.data[image].location.name,
                     latitude: data.data[image].location.latitude,
                     longitude: data.data[image].location.longitude,
-                    url: data.data[image].images.standard_resolution.url
+                    url: data.data[image].images.standard_resolution.url,
+                    hashtags: data.data[image].tags
                 });
-                photoArr.push(photo);
+            }
+            else {
+                photo = new Photo({
+                    locationName: null,
+                    latitude: null,
+                    longitude: null,
+                    url: data.data[image].images.standard_resolution.url,
+                    hashtags: data.data[image].tags
+                });
+            }
+            photoArr.push(photo);
+        }
+
+        return photoArr;
+    },
+
+    getPhotosWithLocation() {
+        let photoArr = [];
+
+        for (let photo of this.models) {
+            if (photo.get('locationName') !== null) {
+                photoArr.push(photo.toJSON());
             }
         }
 
         return photoArr;
+    },
+
+    getHashtags() {
+        let hashTagsCountMapping = {};
+
+        for (let photo of this.models) {
+            let photoHashtags = photo.get('hashtags');
+            if (photoHashtags.length > 0) {
+                for(let hashtag of photoHashtags) {
+                    if(!hashTagsCountMapping[hashtag.toLowerCase()]) {
+                        hashTagsCountMapping[hashtag.toLowerCase()] = {
+                            name: hashtag,
+                            count: 1
+                        };
+                    }
+                    else {
+                        hashTagsCountMapping[hashtag.toLowerCase()].count++;
+                    }
+                }
+            }
+        }
+
+        return Object.values(hashTagsCountMapping);
     }
 });

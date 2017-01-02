@@ -3,6 +3,7 @@
 import $ from 'jquery';
 import View from 'core/view';
 import GoogleMapsLoader from 'google-maps';
+import MapsOverviewContainer from 'app/views/maps-overview-container-view';
 
 let MapsTpl = require('app/templates/partials/maps.html');
 
@@ -23,6 +24,19 @@ export default View.extend({
         window.addEventListener('resize', this.changeSize.bind(this));
     },
 
+    postRender() {
+
+    },
+
+    createMapOverview(data) {
+        let dataMapsObj = {
+            data: data,
+            map: this.map
+        };
+
+        (new MapsOverviewContainer(dataMapsObj)).render().placeAt(this.$el.find('.map-overview'));
+    },
+
     createMap(data) {
         if(!data || data.length < 1)
             return;
@@ -35,7 +49,7 @@ export default View.extend({
                 navigationControl: false,
                 mapTypeControl: false,
                 scaleControl: false,
-                center: {lat: data.models[0].attributes.latitude, lng: data.models[0].attributes.longitude},
+                center: {lat: data[0].latitude, lng: data[0].longitude},
                 mapTypeId: google.maps.MapTypeId.MAP
             };
 
@@ -53,14 +67,15 @@ export default View.extend({
 
             for(var i = 0; i < data.length; i++) {
                 bounds.push(new google.maps.LatLngBounds(
-                    new google.maps.LatLng(data.models[i].attributes.latitude - 0.065, data.models[i].attributes.longitude - 0.1),
-                    new google.maps.LatLng(data.models[i].attributes.latitude + 0.065, data.models[i].attributes.longitude + 0.1)));
+                    new google.maps.LatLng(data[i].latitude - 0.065, data[i].longitude - 0.1),
+                    new google.maps.LatLng(data[i].latitude + 0.065, data[i].longitude + 0.1)));
 
-                srcImage.push(data.models[i].attributes.url);
+                srcImage.push(data[i].url);
 
                 this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
             }
 
+            this.createMapOverview(data);
             //this.changeSize();
 
         }.bind(this));
