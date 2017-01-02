@@ -14,7 +14,7 @@ module.exports = Collection.extend({
         let hashTagsCountMapping = {};
 
         for (let tweet of this.models) {
-            for (let hashtag of tweet.get('entities').hashtags) {
+            for (let hashtag of tweet.getHashTags()) {
                 if (!hashTagsCountMapping[hashtag.text.toLowerCase()]) {
                     hashTagsCountMapping[hashtag.text.toLowerCase()] = {
                         name: hashtag.text,
@@ -26,9 +26,19 @@ module.exports = Collection.extend({
                 }
             }
         }
-        
-        console.log(Object.values(hashTagsCountMapping));
 
         return Object.values(hashTagsCountMapping);
+    },
+
+    getPhotosWithLocation() {
+        let mediaEntries = [];
+
+        for (let tweet of this.models) {
+            if (tweet.getLocation()) {
+                mediaEntries = mediaEntries.concat(tweet.getMediaEntries());
+            }
+        }
+
+        return mediaEntries;
     }
 });
