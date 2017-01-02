@@ -20,7 +20,7 @@
                 "permissions": ["pages_show_list", "email"],
                 "consumerSecret": "7bbe074c8cee9d9d43fe6736414d3a82",
                 "callbackURL": "http://localhost:3000/auth/facebook/callback",
-                "profileFields": ["id", "displayName", "photos", "email", "likes"],
+                "profileFields": ["id", "displayName", "photos", "email", "likes", "feed"],
                 "enableProof": "true"
             },
             "instagram": {

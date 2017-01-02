@@ -11,24 +11,6 @@ module.exports = Collection.extend({
     },
 
     getHashTags() {
-        let hashTagsCountMapping = {};
-
-        for (let feed of this.models) {
-            for (let hashtag of feed.get('data').message) {
-                if (!hashTagsCountMapping[hashtag.text.toLowerCase()]) {
-                    hashTagsCountMapping[hashtag.text.toLowerCase()] = {
-                        name: hashtag.text,
-                        count: 1
-                    };
-                }
-                else {
-                    hashTagsCountMapping[hashtag.text.toLowerCase()].count++;
-                }
-            }
-        }
         
-        console.log(Object.values(hashTagsCountMapping));
-
-        return Object.values(hashTagsCountMapping);
     }
 });
