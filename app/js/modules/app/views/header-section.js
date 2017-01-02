@@ -33,7 +33,6 @@ export default View.extend({
         }
 
         if (this.ProviderManager.get('facebook').isAuthenticated()) {
-            console.log(this.ProviderManager.get('facebook').auth);
             this.disableLoginBtn(this.$facebookLoginContainer);
             this.setAuthData(this.ProviderManager.get('facebook').auth, this.$facebookLoginContainer);
             //console.log(this.ProviderManager.get('facebook').feeds.getHashTags());

@@ -1,3 +1,5 @@
+$mapOverviewWidth: 500px;
+
 .map {
     width: calc(100% - 504px);
     display: inline-block;
@@ -8,7 +10,56 @@
 
 .map-overview {
     display: inline-block;
-    width: 500px;
+    float: right;
+    width: $mapOverviewWidth;
     height: 600px;
     background-color: #92C9CF;
+    overflow: scroll;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.map-overview ul {
+    list-style: none outside none;
+}
+
+.map-overview ul, .map-overview li {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+.media-container {
+    height: 70px;
+    width: $mapOverviewWidth;
+    background-color: black;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.media-picture-container {
+    height: 60px;
+    width: 60px;
+    margin: 5px 0 0 5px;
+    display: inline-block;
+    background-color: red;
+}
+
+.media-picture {
+    height: 60px;
+    width: 60px;
+}
+
+.media-description {
+    width: 430px;
+    height: 60px;
+    margin-top: 5px;
+    padding-left: 20px;
+    float: right;
+    background-color: #1C1D21;
+    overflow: hidden;
 }
