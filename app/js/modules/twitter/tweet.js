@@ -119,5 +119,15 @@
 import Model from 'core/model';
 
 module.exports = Model.extend({
-    
+    getLocation() {
+        return this.get('place');
+    },
+
+    getHashTags() {
+        return this.get('entities').hashtags || [];
+    },
+
+    getMediaEntries() {
+        return this.get('entities').media || [];
+    }
 });
