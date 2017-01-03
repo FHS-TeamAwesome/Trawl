@@ -3,6 +3,7 @@
 import $ from 'jquery';
 import Model from 'core/model';
 import Auth from 'facebook/auth';
+import Photos from 'facebook/photos';
 
 module.exports = Model.extend({
     initialize() {
@@ -14,9 +15,11 @@ module.exports = Model.extend({
     },
 
     fetch() {
-        // replace following code with real fetch data
-        return $.get('/auth/facebook/token').then(function(data) {
-        
-        }.bind(this));
+        return this.fetchPhotos();
+    },
+
+    fetchPhotos() {
+        this.photos = new Photos(this.auth.accessToken);
+        return this.photos.fetch();
     }
 });
