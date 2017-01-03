@@ -4,6 +4,7 @@ import View from 'core/view';
 import HeaderSection from 'app/views/header-section';
 import MapsSection from 'app/views/maps-section';
 import ChartView from 'app/views/chart-view';
+import TagsSection from 'app/views/tags-section';
 
 export default View.extend({
     initialize() {
@@ -33,6 +34,8 @@ export default View.extend({
             this.ProviderManager.get('facebook').isAuthenticated()) {
             this.addSection(new ChartView());
         }
+
+        this.addSection(new TagsSection());
     },
 
     createMapSection() {
