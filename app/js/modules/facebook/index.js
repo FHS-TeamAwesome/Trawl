@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Model from 'core/model';
 import Auth from 'facebook/auth';
 import Photos from 'facebook/photos';
+import Feed from 'facebook/feed';
 
 module.exports = Model.extend({
     initialize() {
@@ -15,11 +16,23 @@ module.exports = Model.extend({
     },
 
     fetch() {
-        return this.fetchPhotos();
+        return $.when(
+            this.fetchPhotos(),
+            this.fetchFeed()
+        );
     },
 
     fetchPhotos() {
         this.photos = new Photos(this.auth.accessToken);
-        return this.photos.fetch();
+        return this.photos.fetch().then(function () {
+
+        }.bind(this));
+    },
+
+    fetchFeed() {
+        this.feed = new Feed(this.auth.accessToken);
+        return this.feed.fetch().then(function () {
+            console.log(this.feed);
+        }.bind(this));
     }
 });
