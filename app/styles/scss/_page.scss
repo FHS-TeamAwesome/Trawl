@@ -1,8 +1,9 @@
 .page-header {
-    background: url("/img/header-bg.png") center center;
+    background: url("/img/header-bg.jpg") center top;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    min-height: 600px;
     position: relative;
 
     &::before {
@@ -14,7 +15,7 @@
         top: 0;
         left: 0;
         z-index: 1;
-        background: rgba(0, 0, 0, .4);
+        background: rgba(0, 0, 0, .65);
     }
 
     .page-section-content {
@@ -24,11 +25,36 @@
 }
 
 .page-header-description {
-    margin-bottom: 70px;
-    font-style: italic;
+    font-size: 18px;
+    margin-bottom: 30px;
 }
 
 .page-section-content {
     position: relative;
     z-index: 5;
+}
+
+.page-section-header {
+    text-align: center;
+    background: #222;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.page-section-title {
+    font-size: 28px;
+    font-weight: 300;
+    margin: 0;
+    width: 50%;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(to right, #2d4373 0%, #2795e9 50%, #b93a96 100%);
+    border-image-slice: 1;
+}
+
+.page-section-description {
+    font-size: 18px;
+    padding: 0 20px;
 }

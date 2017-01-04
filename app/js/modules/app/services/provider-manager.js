@@ -2,11 +2,13 @@
 
 import $ from 'jquery';
 import ServiceLocator from 'core/service-locator';
+import core from 'core';
 
 ServiceLocator.create('ProviderManager', class ProviderManager {
     constructor() {
         this.providers = [];
         this.providersByName = {};
+        this.EventDispatcher = core.EventDispatcher;
     }
 
     add(name, provider) {
@@ -44,8 +46,10 @@ ServiceLocator.create('ProviderManager', class ProviderManager {
         let provider = this.get(name);
 
         return provider.auth.fetch().then(function() {
-            return provider.fetch();
-        });
+            return provider.fetch().then(function() {
+                this.EventDispatcher.trigger('provider:fetch:complete', { provider });
+            }.bind(this));
+        }.bind(this));
     }
 
     openPopup(authUrl) {

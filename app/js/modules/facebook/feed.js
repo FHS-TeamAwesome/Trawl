@@ -20,8 +20,9 @@ module.exports = Collection.extend({
     },
 
     parse(data) {
+        if (!data.feed) return {};
 
-        if(!data) return {};
+        console.log(data);
 
         let feedArr = [];
 

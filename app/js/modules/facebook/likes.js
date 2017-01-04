@@ -17,13 +17,15 @@ module.exports = Model.extend({
     },
 
     parse(data) {
+        if (!data.likes) return {};
+
         return { likes: data.likes.data };
     },
 
     getActivities() {
         let activities = [];
 
-        for (let like of data.likes){
+        for (let like of this.get('likes')){
             activities.push(like.created_time);
         }
 

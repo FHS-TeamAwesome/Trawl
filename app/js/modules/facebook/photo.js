@@ -1,3 +1,5 @@
+'use strict';
+
 import Model from 'core/model';
 
 module.exports = Model.extend({

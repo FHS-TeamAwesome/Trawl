@@ -7,7 +7,7 @@ module.exports = Collection.extend({
     model: Tweet,
 
     url() {
-        return '/api/twitter/statuses/user_timeline.json';
+        return '/api/twitter/statuses/user_timeline.json?count=200&include_rts=1';
     },
 
     getHashTags() {
