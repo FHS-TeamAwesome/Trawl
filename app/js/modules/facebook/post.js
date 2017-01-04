@@ -21,5 +21,9 @@ module.exports = Model.extend({
         }
 
         return matches;
+    },
+
+    getCreateDate(){
+        return this.get('created_time');
     }
 });

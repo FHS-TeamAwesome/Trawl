@@ -58,5 +58,17 @@ module.exports = Collection.extend({
         }
 
         return Object.values(hashTagsCountMapping);
+    },
+
+    getActivities() {
+        let activities = [];
+
+        for (let post of this.models) {
+
+            activities.push(post.getCreateDate());
+
+        }
+
+        return activities;
     }
 });

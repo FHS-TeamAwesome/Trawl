@@ -8,6 +8,10 @@ module.exports = Model.extend({
         longitude: null,
         url: null,
         created_time: null
+    },
+
+    getCreateDate() {
+        return this.get('created_time');
     }
 
 });
