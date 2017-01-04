@@ -6,11 +6,6 @@ import Backbone from 'backbone';
 import ServiceLocator from './service-locator';
 import EDWrapper from './event-dispatcher';
 
-_.templateSettings = {
-    interpolate: /\{\{=(.+?)\}\}/g,
-    evaluate: /\{\{(.+?)\}\}/g
-};
-
 export default Backbone.View.extend({
     getService: ServiceLocator.get,
     

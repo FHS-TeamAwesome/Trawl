@@ -32,7 +32,8 @@
             background: #fff;
         }
 
-        &:hover {
+        &:hover,
+        &.is-active {
             &::after {
                 width: 100%;
                 left: 0%;

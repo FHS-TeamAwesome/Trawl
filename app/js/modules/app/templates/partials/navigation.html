@@ -1,0 +1,14 @@
+<nav class="navigation util-clearfix">
+    <ul class="navigation-list list-inline util-pull-right">
+        <li>
+            <a <% if (currentRoute === '') { %>class="is-active"<% } %> href="/">Home</a>
+        </li>
+        <li>
+            <a <% if (currentRoute === 'about') { %>class="is-active"<% } %> href="/about">About</a>
+        </li>
+        <li>
+            <a <% if (currentRoute === 'imprint') { %>class="is-active"<% } %> href="/imprint">Imprint</a>
+        </li>
+    </ul>
+</nav>
+        

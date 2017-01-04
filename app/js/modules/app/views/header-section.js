@@ -1,9 +1,11 @@
 'use strict';
 
 import $ from 'jquery';
+import _ from 'underscore';
 import View from 'core/view';
 
 let HeaderTpl = require('app/templates/partials/header.html');
+let NavigationTpl = require('app/templates/partials/navigation.html');
 
 export default View.extend({
     initialize() {
@@ -15,6 +17,12 @@ export default View.extend({
         this.$el.on('click', '#twitter-login:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
         this.$el.on('click', '#facebook-login:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
         this.$el.on('click', '#instagram-login:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
+
+        this.$el.find('#navigation-container').append(_.template(NavigationTpl)
+            ({ 
+                currentRoute: '' 
+            })
+        );
     },
 
     postPlaceAt() {

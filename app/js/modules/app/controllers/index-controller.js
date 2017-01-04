@@ -14,6 +14,8 @@ export default Controller.extend({
     },
 
     initialize() {
+        this.triedFetching = false;
+
         this.ProviderManager = this.getService('ProviderManager');
         this.ProviderManager
                 .add('twitter', new Twitter())
@@ -22,6 +24,14 @@ export default Controller.extend({
     },
 
     indexAction() {
+        if (this.triedFetching) {
+            this.triedFetching = true;
+
+            this.setView(new IndexView());
+            
+            return;
+        }
+
         $.whenAll(
             this.ProviderManager.fetchAuth('twitter'),
             this.ProviderManager.fetchAuth('facebook'),

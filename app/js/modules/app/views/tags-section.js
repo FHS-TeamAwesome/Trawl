@@ -39,7 +39,7 @@ export default View.extend({
             .words(this.hashTags.total.map(function(entry) {
                 return {
                     text: entry.name, 
-                    size: 10 + entry.count * 50 * window.innerWidth * 0.0001
+                    size: 10 + entry.count * 50 * window.innerWidth * 0.001
                 };
             }))
             .padding(5)
