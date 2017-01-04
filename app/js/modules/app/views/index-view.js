@@ -24,13 +24,10 @@ export default View.extend({
         // adding header section first
         this.addSection(new HeaderSection());
 
-        if (this.ProviderManager.get('instagram').isAuthenticated()) {
-            this.createMapSection();
-        }
-
         if (this.ProviderManager.get('instagram').isAuthenticated() ||
             this.ProviderManager.get('twitter').isAuthenticated() ||
             this.ProviderManager.get('facebook').isAuthenticated()) {
+            this.createMapSection();
             this.addSection(new ChartView());
         }
     },
@@ -39,6 +36,28 @@ export default View.extend({
         var map = new MapsSection();
         this.addSection(map);
 
-        map.createMap(this.ProviderManager.get('instagram').photos.getPhotosWithLocation());
+        var mediaObj = [];
+        var photos  = [];
+
+        photos = this.ProviderManager.get('twitter').tweets.getPhotosWithLocation();
+        for(let photo of photos) {
+            mediaObj.push(photo);
+        }
+
+        photos = this.ProviderManager.get('instagram').photos.getPhotosWithLocation();
+        for(let photo of photos) {
+            mediaObj.push(photo);
+        }
+
+        console.log(mediaObj);
+
+        /*
+        photos = this.ProviderManager.get('facebook').photos.getPhotosWithLocation();
+        for(let photo of photos) {
+            mediaObj.push(photo);
+        }*/
+
+        map.createMap();
+        //map.addData();
     }
 });

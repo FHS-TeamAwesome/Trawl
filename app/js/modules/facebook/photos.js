@@ -156,7 +156,7 @@ module.exports = Collection.extend({
             };
             if (image.place) {
                 photoData.locationName = image.place.name;
-                photoData.latitude = image.place.location.longitude;
+                photoData.latitude = image.place.location.latitude;
                 photoData.longitude = image.place.location.longitude;
             }
 

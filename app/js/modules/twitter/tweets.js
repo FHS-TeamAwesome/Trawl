@@ -35,7 +35,16 @@ module.exports = Collection.extend({
 
         for (let tweet of this.models) {
             if (tweet.getLocation()) {
-                mediaEntries = mediaEntries.concat(tweet.getMediaEntries());
+                for(let i = 0; i < tweet.getMediaEntries().length; i++) {
+                    let mediaEntry = {
+                        locationName: tweet.getLocation().name,
+                        latitude: tweet.getLocation().bounding_box.coordinates[0][0][1],
+                        longitude: tweet.getLocation().bounding_box.coordinates[0][0][0],
+                        url: tweet.getMediaEntries()[0].media_url,
+                        hashtags: tweet.getHashTags()
+                    };
+                    mediaEntries.push(mediaEntry);
+                }
             }
         }
 

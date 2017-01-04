@@ -6,11 +6,13 @@ import GoogleMapsLoader from 'google-maps';
 import MapsOverviewContainer from 'app/views/maps-overview-container-view';
 
 let MapsTpl = require('app/templates/partials/maps.html');
+let MapStyle = require('app/views/map-style.json');
 
 export default View.extend({
 
     overlay: [],
     map: null,
+    google: null,
     zoomLevel: 9,
 
     initialize() {
@@ -37,9 +39,9 @@ export default View.extend({
         (new MapsOverviewContainer(dataMapsObj)).render().placeAt(this.$el.find('.map-overview'));
     },
 
-    createMap(data) {
-        if(!data || data.length < 1)
-            return;
+    createMap() {
+        //if(!data || data.length < 1)
+        //    return;
 
         GoogleMapsLoader.load(function(google) {
 
@@ -49,11 +51,13 @@ export default View.extend({
                 navigationControl: false,
                 mapTypeControl: false,
                 scaleControl: false,
-                center: {lat: data[0].latitude, lng: data[0].longitude},
+                //center: {lat: data[0].latitude, lng: data[0].longitude},
                 mapTypeId: google.maps.MapTypeId.MAP
             };
 
+            this.google = google;
             this.map = new google.maps.Map($('.map')[0], options);
+            this.map.data.loadGeoJson(MapStyle);
             this.USGSOverlay.prototype = new google.maps.OverlayView();
 
             this.USGSOverlay.prototype.onAdd = this.USGSOverlayOnAdd;
@@ -62,23 +66,34 @@ export default View.extend({
 
             this.map.addListener('zoom_changed', this.changeSize.bind(this));
 
-            var bounds = [];
-            var srcImage = [];
-
-            for(var i = 0; i < data.length; i++) {
-                bounds.push(new google.maps.LatLngBounds(
-                    new google.maps.LatLng(data[i].latitude - 0.065, data[i].longitude - 0.1),
-                    new google.maps.LatLng(data[i].latitude + 0.065, data[i].longitude + 0.1)));
-
-                srcImage.push(data[i].url);
-
-                this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
-            }
-
-            this.createMapOverview(data);
-            //this.changeSize();
+            this.addData();
 
         }.bind(this));
+    },
+
+    addData(data) {
+        var bounds = [];
+        var srcImage = [];
+
+        if(this.overlay.length === 0) {
+            this.map.setCenter({lat: 15, lng: 45});
+        }
+
+        if(!data)
+            return;
+
+        for(var i = 0; i < data.length; i++) {
+            bounds.push(new this.google.maps.LatLngBounds(
+                new this.google.maps.LatLng(data[i].latitude - 0.065, data[i].longitude - 0.1),
+                new this.google.maps.LatLng(data[i].latitude + 0.065, data[i].longitude + 0.1)));
+
+            srcImage.push(data[i].url);
+
+            this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
+        }
+
+        this.createMapOverview(data);
+        //this.changeSize();
     },
 
     USGSOverlay(bounds, image, map) {

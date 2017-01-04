@@ -7,7 +7,8 @@ module.exports = Model.extend({
         latitude: null,
         longitude: null,
         url: null,
-        created_time: null
+        created_time: null,
+        hashtags: null
     }
 
 });
