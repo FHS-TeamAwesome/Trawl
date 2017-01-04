@@ -177,5 +177,15 @@ module.exports = Collection.extend({
         }
 
         return photoArr;
+    },
+
+    getActivities() {
+        let activities = [];
+
+        for (let photo of this.model) {
+            activities.push(photo.getCreateDate());
+        }
+
+        return activities;
     }
 });
