@@ -32,7 +32,7 @@ module.exports = Model.extend({
     fetchFeed() {
         this.feed = new Feed(this.auth.accessToken);
         return this.feed.fetch().then(function () {
-            console.log(this.feed);
+            this.feed.getHashTags();
         }.bind(this));
     }
 });

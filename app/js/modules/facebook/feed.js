@@ -21,7 +21,6 @@ module.exports = Collection.extend({
 
     parse(data) {
 
-
         if(!data) return {};
 
         let feedArr = [];
@@ -39,5 +38,25 @@ module.exports = Collection.extend({
         }
 
         return feedArr;
+    },
+
+    getHashTags() {
+        let hashTagsCountMapping = {};
+
+        for (let post of this.models) {
+            for (let hashtag of post.getHashTags()) {
+                if (!hashTagsCountMapping[hashtag.toLowerCase()]) {
+                    hashTagsCountMapping[hashtag.toLowerCase()] = {
+                        name: hashtag,
+                        count: 1
+                    };
+                }
+                else {
+                    hashTagsCountMapping[hashtag.toLowerCase()].count++;
+                }
+            }
+        }
+
+        return Object.values(hashTagsCountMapping);
     }
 });
