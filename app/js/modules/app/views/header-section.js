@@ -14,7 +14,7 @@ export default View.extend({
     },
 
     postDestroy() {
-        this.EventDispatcher.off('scolling:enable');
+        this.EventDispatcher.off('scrolling:enable');
     },
 
     postRender() {
@@ -22,7 +22,7 @@ export default View.extend({
         this.$el.on('click', '#facebook-login:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
         this.$el.on('click', '#instagram-login:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
 
-        this.EventDispatcher.on('scolling:enable', this.showScrollingIndicator.bind(this));
+        this.EventDispatcher.on('scrolling:enable', this.showScrollingIndicator.bind(this));
 
         this.$el.find('#navigation-container').append(_.template(NavigationTpl)
             ({ 

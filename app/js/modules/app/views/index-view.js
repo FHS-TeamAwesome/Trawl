@@ -28,7 +28,7 @@ export default View.extend({
         this.sections.push(section);
 
         if (this.sections > 1) {
-            this.EventDispatcher.trigger('scolling:enable');
+            this.EventDispatcher.trigger('scrolling:enable');
         }
     },
 
