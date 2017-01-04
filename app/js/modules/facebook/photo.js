@@ -6,7 +6,8 @@ module.exports = Model.extend({
         locationName: null,
         latitude: null,
         longitude: null,
-        url: null
+        url: null,
+        created_time: null
     }
 
 });

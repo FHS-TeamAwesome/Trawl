@@ -81,6 +81,10 @@
     background-color: #bada55;
     transition: left 0.8s ease-in-out;
     text-align: left;
+
+    @media only screen and (max-width: $screen-md) {
+        text-align: center;
+    }
 }
 
 .btn-login-container {
@@ -92,6 +96,10 @@
         .btn-loggedin {
             left: 0;
         }
+    }
+
+    @media only screen and (max-width: $screen-md) {
+        margin: 10px 10px;
     }
 }
 
