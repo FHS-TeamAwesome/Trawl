@@ -11,9 +11,15 @@ export default View.extend({
     initialize() {
         this.template = TagsTpl;
 
-        this.hashTags = this.getService('DataManager').getHashTags();
+        this.DataManager = this.getService('DataManager');
+
+        this.hashTags = this.DataManager.getHashTags();
 
         this.cloudLayout = null;
+    },
+
+    postRender() {
+        this.EventDispatcher.on('provider:fetch:complete', this.addHashTagsHandler.bind(this));
     },
 
     postPlaceAt() {
@@ -22,6 +28,12 @@ export default View.extend({
         _.defer(this.createTagCloud.bind(this));
 
         window.addEventListener('resize', _.debounce(this.restartLayout.bind(this), 250), false);
+    },
+
+    addHashTagsHandler() {
+        this.hashTags = this.DataManager.getHashTags();
+
+        this.restartLayout();
     },
 
     restartLayout() {
@@ -39,14 +51,14 @@ export default View.extend({
             .words(this.hashTags.total.map(function(entry) {
                 return {
                     text: entry.name, 
-                    size: 10 + entry.count * 50 * window.innerWidth * 0.001
+                    size: 10 + entry.count * 20 * window.innerWidth * 0.001
                 };
             }))
             .padding(5)
             .rotate(function() { 
                 return 0; 
             })
-            .font('Impact')
+            .font('Source Sans Pro')
             .fontSize(function(word) { 
                 return word.size; 
             })
@@ -69,16 +81,14 @@ export default View.extend({
             .style('font-size', function(word) { 
                 return word.size + 'px'; 
             })
-            .style('font-family', 'Impact')
-            .style('fill', function(d, i) { 
-                return fill(i); 
-            })
+            .style('font-family', 'Source Sans Pro')
+            .style('fill', '#fff')
             .attr('text-anchor', 'middle')
             .attr('transform', function(word) {
                 return 'translate(' + [word.x, word.y] + ')rotate(' + word.rotate + ')';
             })
-        .text(function(d) { 
-            return d.text; 
+        .text(function(word) { 
+            return word.text; 
         });
     }
 });

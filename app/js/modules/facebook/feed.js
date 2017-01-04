@@ -22,7 +22,7 @@ module.exports = Collection.extend({
     parse(data) {
 
 
-        if(!data) return {};
+        if (!data.feed) return {};
 
         let feedArr = [];
 

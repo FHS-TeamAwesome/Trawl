@@ -31,19 +31,22 @@ ServiceLocator.create('DataManager', class DataManager {
 
         if (
             this.ProviderManager.get('facebook').isAuthenticated() && 
-            this.ProviderManager.get('facebook').getHashTags
+            this.ProviderManager.get('facebook').feed.getHashTags
         ) {
-            facebookHashTags = this.ProviderManager.get('facebook').getHashTags();
+            facebookHashTags = this.ProviderManager.get('facebook').feed.getHashTags();
         }
 
         //create total
-
         return {
             instagram: instagramHashTags,
             twitter: twitterHashTags,
             facebook: facebookHashTags,
             total: total.concat(twitterHashTags, instagramHashTags, facebookHashTags)
         };
+    }
+
+    hasHashTags() {
+        return this.getHashTags().total.length > 0;
     }
 
 });

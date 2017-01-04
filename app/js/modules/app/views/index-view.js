@@ -9,11 +9,18 @@ import TagsSection from 'app/views/tags-section';
 export default View.extend({
     initialize() {
         this.sections = [];
+        this.DataManager = this.getService('DataManager');
         this.ProviderManager = this.getService('ProviderManager');
     },
 
+    postDestroy() {
+        this.EventDispatcher.off('provider:fetch:complete');
+    },
+
     postPlaceAt() {
-        this.EventDispatcher.on('fetched:instagram:photos', this.createMapSection.bind(this));
+        // this.EventDispatcher.on('fetched:instagram:photos', this.createMapSection.bind(this));
+
+        this.EventDispatcher.on('provider:fetch:complete', this.addSectionHandler.bind(this));
     },
 
     addSection(section) {
@@ -25,16 +32,34 @@ export default View.extend({
         // adding header section first
         this.addSection(new HeaderSection());
 
-        if (this.ProviderManager.get('instagram').isAuthenticated()) {
-            this.createMapSection();
-        }
+        // if (this.ProviderManager.get('instagram').isAuthenticated()) {
+        //     this.createMapSection();
+        // }
 
-        if (this.ProviderManager.get('instagram').isAuthenticated() ||
-            this.ProviderManager.get('twitter').isAuthenticated() ||
-            this.ProviderManager.get('facebook').isAuthenticated()) {
-            this.addSection(new ChartView());
-        }
+        // if (this.ProviderManager.get('instagram').isAuthenticated() ||
+        //     this.ProviderManager.get('twitter').isAuthenticated() ||
+        //     this.ProviderManager.get('facebook').isAuthenticated()) {
+        //     this.addSection(new ChartView());
+        // }
+        
+        this.addSectionHandler();
+    },
 
+    addSectionHandler() {
+        if (this.DataManager.hasHashTags() && !this.checkSectionExist(TagsSection)) {
+            this.addTagSection();
+        }
+    },
+
+    checkSectionExist(SectionInstance) {
+        for (let section of this.sections) {
+            if (section instanceof SectionInstance) {
+                return true;
+            }
+        }
+    },
+
+    addTagSection() {
         this.addSection(new TagsSection());
     },
 
