@@ -66,7 +66,7 @@ module.exports = Collection.extend({
         return photoArr;
     },
 
-    getHashtags() {
+    getHashTags() {
         let hashTagsCountMapping = {};
 
         for (let photo of this.models) {

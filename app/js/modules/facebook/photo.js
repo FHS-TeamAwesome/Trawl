@@ -1,3 +1,5 @@
+'use strict';
+
 import Model from 'core/model';
 
 module.exports = Model.extend({
@@ -9,6 +11,10 @@ module.exports = Model.extend({
         url: null,
         created_time: null,
         hashtags: null
+    },
+
+    getCreateDate() {
+        return this.get('created_time');
     }
 
 });

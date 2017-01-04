@@ -6,11 +6,6 @@ import Backbone from 'backbone';
 import ServiceLocator from './service-locator';
 import EDWrapper from './event-dispatcher';
 
-_.templateSettings = {
-    interpolate: /\{\{=(.+?)\}\}/g,
-    evaluate: /\{\{(.+?)\}\}/g
-};
-
 export default Backbone.View.extend({
     getService: ServiceLocator.get,
     
@@ -71,6 +66,8 @@ export default Backbone.View.extend({
     destroy() {
         this.unbind();
         this.remove();
+
+        this.postDestroy();
     },
 
     // Lifecycle Methods
@@ -86,5 +83,10 @@ export default Backbone.View.extend({
     // `postPlaceAt` fires just before the view's `placeAt` method returns. Do
     // things here that require the view to be placed in the document, such as
     // operations that require knowing the dimensions of the view.
-    postPlaceAt() { }
+    postPlaceAt() { },
+
+    // `postDestroy` fires just before the view's `destroy` method returns. Do
+    // things here that are needed to cleanup the view, such as removing 
+    // event bindings which are not handled by the destroy method itself.
+    postDestroy() { }
 });

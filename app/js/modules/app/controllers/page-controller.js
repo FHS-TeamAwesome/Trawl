@@ -13,10 +13,10 @@ export default Controller.extend({
     },
 
     aboutAction() {
-        this.setView(new PageView({ template: AboutTpl }));
+        this.setView(new PageView({ template: AboutTpl, currentRoute: 'about' }));
     },
 
     imprintAction() {
-        this.setView(new PageView({ template: ImprintTpl }));
+        this.setView(new PageView({ template: ImprintTpl, currentRoute: 'imprint' }));
     }
 });
