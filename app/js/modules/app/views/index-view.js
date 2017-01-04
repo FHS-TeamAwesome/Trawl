@@ -26,6 +26,10 @@ export default View.extend({
     addSection(section) {
         section.render().placeAt(this.$el);
         this.sections.push(section);
+
+        if (this.sections > 1) {
+            this.EventDispatcher.trigger('scolling:enable');
+        }
     },
 
     postRender() {

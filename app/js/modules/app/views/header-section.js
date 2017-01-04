@@ -13,10 +13,16 @@ export default View.extend({
         this.ProviderManager = this.getService('ProviderManager');
     },
 
+    postDestroy() {
+        this.EventDispatcher.off('scolling:enable');
+    },
+
     postRender() {
         this.$el.on('click', '#twitter-login:not(.is-loggedin)', this.twitterLoginHandler.bind(this));
         this.$el.on('click', '#facebook-login:not(.is-loggedin)', this.facebookLoginHandler.bind(this));
         this.$el.on('click', '#instagram-login:not(.is-loggedin)', this.instagramLoginHandler.bind(this));
+
+        this.EventDispatcher.on('scolling:enable', this.showScrollingIndicator.bind(this));
 
         this.$el.find('#navigation-container').append(_.template(NavigationTpl)
             ({ 
@@ -32,6 +38,10 @@ export default View.extend({
 
         this.setBtnStates();
         this.updateProgressBar();
+    },
+
+    showScrollingIndicator() {
+        // this.$el.find('#scrolling-indicator').addClass('is-visible');
     },
 
     setBtnStates() {

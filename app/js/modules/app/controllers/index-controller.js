@@ -25,8 +25,6 @@ export default Controller.extend({
 
     indexAction() {
         if (this.triedFetching) {
-            this.triedFetching = true;
-
             this.setView(new IndexView());
             
             return;
@@ -37,6 +35,7 @@ export default Controller.extend({
             this.ProviderManager.fetchAuth('facebook'),
             this.ProviderManager.fetchAuth('instagram')
         ).always(function() {
+            this.triedFetching = true;
             this.setView(new IndexView());
         }.bind(this));
     }

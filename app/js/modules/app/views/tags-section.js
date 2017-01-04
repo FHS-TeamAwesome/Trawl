@@ -56,7 +56,7 @@ export default View.extend({
             }))
             .padding(5)
             .rotate(function() { 
-                return 0; 
+                return ~~(Math.random() * 2) * 90;
             })
             .font('Source Sans Pro')
             .fontSize(function(word) { 
@@ -81,8 +81,11 @@ export default View.extend({
             .style('font-size', function(word) { 
                 return word.size + 'px'; 
             })
+            .style('font-weight', '300')
             .style('font-family', 'Source Sans Pro')
-            .style('fill', '#fff')
+            .style('fill', function(d, i) { 
+                return fill(i); 
+            })
             .attr('text-anchor', 'middle')
             .attr('transform', function(word) {
                 return 'translate(' + [word.x, word.y] + ')rotate(' + word.rotate + ')';
