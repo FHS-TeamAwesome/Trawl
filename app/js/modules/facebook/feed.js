@@ -2,8 +2,7 @@
  * "feed": {
     "data": [
       {
-        "message": "facebook.getHashTags()
-#goodtimes,#fun,#mates,#helloween,#vomsalatschrumpftderbizeps,#inamsterdam,#lifeisgreat,#interrail,#rainyday,#sanktpetersdom,#adventure,#couchsurfing,#withvanillacream,#inderweltzuhause,#fizf,#ajde,#gemma,#aslebenissche,#voyager,#djinns,#austria,#sportsfreundin",
+        "message": "its the truth",
         "story": "Theresa Elisa at MultiMediaTechnology.",
         "created_time": "2017-01-04T09:21:50+0000",
         "id": "181533942181691_386066995061717"
@@ -97,8 +96,7 @@ bitte für die Vicky und mich Voten! Des wär echt nett!",
         "id": "181533942181691_330872323914518"
       },
       {
-        "message": "We exist.
-#inamsterdam",
+        "message": "We exist.",
         "story": "Theresa Elisa with Sandra Schuster at Holland, Amsterdam.",
         "created_time": "2016-09-14T22:50:41+0000",
         "id": "181533942181691_330235737311510"
