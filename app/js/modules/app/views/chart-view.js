@@ -9,6 +9,7 @@ let ChartTpl = require('app/templates/partials/chart.html');
 export default View.extend({
     initialize() {
         this.template = ChartTpl;
+        this.provider = this.get('ProviderManager');;
     },
 
     postPlaceAt() {
