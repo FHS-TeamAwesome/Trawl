@@ -10,7 +10,7 @@ module.exports = Model.extend({
         longitude: null,
         url: null,
         created_time: null,
-        hashtags: null
+        hashtags: []
     },
 
     getCreateDate() {

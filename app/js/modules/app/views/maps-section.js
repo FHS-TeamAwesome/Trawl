@@ -6,7 +6,6 @@ import GoogleMapsLoader from 'google-maps';
 import MapsOverviewContainer from 'app/views/maps-overview-container-view';
 
 let MapsTpl = require('app/templates/partials/maps.html');
-let MapStyle = require('app/views/map-style.json');
 
 export default View.extend({
 
@@ -14,34 +13,20 @@ export default View.extend({
     map: null,
     google: null,
     zoomLevel: 9,
+    photos: null,
+    isCenterSet: false,
+    mapsOverviewContainer: null,
 
     initialize() {
         this.template = MapsTpl;
 
+        this.DataManager = this.getService('DataManager');
+
+        if(this.DataManager.hasPhotos())
+            this.photos = this.DataManager.getPhotos();
+
         GoogleMapsLoader.KEY = "AIzaSyAh-kj7TyOmyZqhXADnBJOQGP3iDlVu85E";
         GoogleMapsLoader.LANGUAGE = 'de';
-    },
-
-    postPlaceAt() {
-        window.addEventListener('resize', this.changeSize.bind(this));
-    },
-
-    postRender() {
-
-    },
-
-    createMapOverview(data) {
-        let dataMapsObj = {
-            data: data,
-            map: this.map
-        };
-
-        (new MapsOverviewContainer(dataMapsObj)).render().placeAt(this.$el.find('.map-overview'));
-    },
-
-    createMap() {
-        //if(!data || data.length < 1)
-        //    return;
 
         GoogleMapsLoader.load(function(google) {
 
@@ -51,13 +36,15 @@ export default View.extend({
                 navigationControl: false,
                 mapTypeControl: false,
                 scaleControl: false,
-                //center: {lat: data[0].latitude, lng: data[0].longitude},
                 mapTypeId: google.maps.MapTypeId.MAP
             };
 
             this.google = google;
             this.map = new google.maps.Map($('.map')[0], options);
-            this.map.data.loadGeoJson(MapStyle);
+            this.map.setCenter({lat: 47.72412, lng: 13.08633});
+
+            this.map.setOptions({styles: this.styles});
+
             this.USGSOverlay.prototype = new google.maps.OverlayView();
 
             this.USGSOverlay.prototype.onAdd = this.USGSOverlayOnAdd;
@@ -71,29 +58,70 @@ export default View.extend({
         }.bind(this));
     },
 
-    addData(data) {
+    addData() {
         var bounds = [];
         var srcImage = [];
 
-        if(this.overlay.length === 0) {
-            this.map.setCenter({lat: 15, lng: 45});
-        }
+        if(this.DataManager.hasPhotos())
+            this.photos = this.DataManager.getPhotos();
 
-        if(!data)
+        if(!this.photos)
             return;
 
-        for(var i = 0; i < data.length; i++) {
-            bounds.push(new this.google.maps.LatLngBounds(
-                new this.google.maps.LatLng(data[i].latitude - 0.065, data[i].longitude - 0.1),
-                new this.google.maps.LatLng(data[i].latitude + 0.065, data[i].longitude + 0.1)));
+        if(this.isCenterSet === false) {
+            this.isCenterSet = true;
+            this.map.setCenter({lat: this.photos.total[0].latitude, lng: this.photos.total[0].longitude});
+        }
 
-            srcImage.push(data[i].url);
+        for(var i = 0; i < this.photos.total.length; i++) {
+            bounds.push(new this.google.maps.LatLngBounds(
+                new this.google.maps.LatLng(this.photos.total[i].latitude - 0.065, this.photos.total[i].longitude - 0.1),
+                new this.google.maps.LatLng(this.photos.total[i].latitude + 0.065, this.photos.total[i].longitude + 0.1)));
+
+            srcImage.push(this.photos.total[i].url);
 
             this.overlay.push(new this.USGSOverlay(bounds[i], srcImage[i], this.map));
         }
 
-        this.createMapOverview(data);
-        //this.changeSize();
+        this.createMapOverview(this.photos.total);
+    },
+
+    postPlaceAt() {
+        window.addEventListener('resize', this.changeSize.bind(this));
+    },
+
+    postRender() {
+        this.EventDispatcher.on('provider:fetch:complete', this.addPhotosHandler.bind(this));
+    },
+
+    addPhotosHandler() {
+        this.resetData();
+    },
+
+    resetData() {
+        for(let o of this.overlay) {
+            o.setMap(null);
+        }
+
+        this.addData();
+    },
+
+    createMapOverview(data) {
+        let dataMapsObj = {
+            data: data,
+            map: this.map
+        };
+
+        if(this.mapsOverviewContainer === null) {
+            this.mapsOverviewContainer = new MapsOverviewContainer();
+            this.mapsOverviewContainer.addData(dataMapsObj);
+            this.mapsOverviewContainer.render().placeAt(this.$el.find('.map-overview'));
+        }
+        else {
+            this.mapsOverviewContainer.resetData();
+            this.mapsOverviewContainer.addData(dataMapsObj);
+            this.mapsOverviewContainer.renderData();
+        }
     },
 
     USGSOverlay(bounds, image, map) {
@@ -205,5 +233,235 @@ export default View.extend({
         }
 
         this.zoomLevel = this.map.getZoom();
-    }
+    },
+
+    styles: [
+        {
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#212121"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.icon",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#757575"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#212121"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#757575"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.country",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#9e9e9e"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.land_parcel",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.locality",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#bdbdbd"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.neighborhood",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#757575"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.business",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#181818"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "labels.text",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#616161"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#1b1b1b"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#2c2c2c"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#8a8a8a"
+                }
+            ]
+        },
+        {
+            "featureType": "road.arterial",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#373737"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#3c3c3c"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway.controlled_access",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#4e4e4e"
+                }
+            ]
+        },
+        {
+            "featureType": "road.local",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#616161"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#757575"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#000000"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "labels.text",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#3d3d3d"
+                }
+            ]
+        }
+    ]
 });

@@ -44,7 +44,7 @@ module.exports = Model.extend({
     fetchLikes() {
         this.likes = new Likes(this.auth.accessToken);
         return this.likes.fetch().then(function () {
-            console.log(this.likes);
+            //console.log(this.likes);
         }.bind(this));
     }
 });

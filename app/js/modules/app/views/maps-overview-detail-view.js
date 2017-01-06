@@ -27,7 +27,7 @@ export default View.extend({
         if(this.mediaObject.hashtags) {
             mediaDescription.append('Hashtags: ');
             for (let i = 0; i < this.mediaObject.hashtags.length; i++) {
-                if (i - 1 != this.mediaObject.hashtags.length)
+                if (i + 1 != this.mediaObject.hashtags.length)
                     mediaDescription.append('#' + this.mediaObject.hashtags[i] + ', ');
                 else
                     mediaDescription.append('#' + this.mediaObject.hashtags[i]);
