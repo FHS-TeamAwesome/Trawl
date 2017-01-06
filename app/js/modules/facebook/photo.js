@@ -11,6 +11,7 @@ module.exports = Model.extend({
         longitude: null,
         url: null,
         created_time: null,
+        hashtags: [],
         provider: 'facebook'
     },
 
