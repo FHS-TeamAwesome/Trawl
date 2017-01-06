@@ -19,17 +19,19 @@ export default View.extend({
     },
 
     postPlaceAt() {
-        this.$el.find('.media-picture').attr('src',this.mediaObject.url);
+        this.$el.find('.media-picture').attr('src', this.mediaObject.url);
 
         let mediaDescription = this.$el.find('.media-description');
         mediaDescription.append('<p>');
         mediaDescription.append('Standort: ' + this.mediaObject.locationName + '<br>');
-        mediaDescription.append('Hashtags: ');
-        for(let i = 0; i < this.mediaObject.hashtags.length; i++) {
-            if(i-1 != this.mediaObject.hashtags.length)
-                mediaDescription.append('#' + this.mediaObject.hashtags[i] + ', ');
-            else
-                mediaDescription.append('#' + this.mediaObject.hashtags[i]);
+        if(this.mediaObject.hashtags) {
+            mediaDescription.append('Hashtags: ');
+            for (let i = 0; i < this.mediaObject.hashtags.length; i++) {
+                if (i + 1 != this.mediaObject.hashtags.length)
+                    mediaDescription.append('#' + this.mediaObject.hashtags[i] + ', ');
+                else
+                    mediaDescription.append('#' + this.mediaObject.hashtags[i]);
+            }
         }
         mediaDescription.append('</p>');
 

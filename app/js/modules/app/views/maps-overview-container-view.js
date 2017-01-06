@@ -10,16 +10,27 @@ export default View.extend({
     mediaObjects: null,
     map: null,
 
-    initialize(data) {
+    initialize() {
         this.$el.addClass('maps-overview-container');
+    },
+
+    postRender() {
+        this.renderData();
+    },
+
+    addData(data) {
         this.mediaObjects = data.data;
         this.map = data.map;
     },
 
-    postRender() {
+    renderData() {
         for(let i = 0; i < this.mediaObjects.length; i++) {
             this.addMediaDetail(this.mediaObjects[i]);
         }
+    },
+
+    resetData() {
+        this.$el.empty();
     },
 
     addMediaDetail(mediaObject) {
