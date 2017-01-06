@@ -5,11 +5,13 @@ import Model from 'core/model';
 module.exports = Model.extend({
 
     defaults: {
+        id: null,
         locationName: null,
         latitude: null,
         longitude: null,
         url: null,
-        created_time: null
+        created_time: null,
+        provider: 'facebook'
     },
 
     getCreateDate() {
