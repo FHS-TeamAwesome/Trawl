@@ -34,19 +34,22 @@ module.exports = Collection.extend({
         let mediaEntries = [];
 
         for (let tweet of this.models) {
-            if (tweet.getLocation()) {
-                for(let i = 0; i < tweet.getMediaEntries().length+3; i++) {
+            if (tweet.getLocation() && tweet.getMediaEntries()[0].media_url) {
+                for(let i = 0; i < tweet.getMediaEntries().length; i++) {
+
                     let mediaEntry = {
                         locationName: tweet.getLocation().name,
-                        latitude: tweet.getLocation().bounding_box.coordinates[0][i][1],
-                        longitude: tweet.getLocation().bounding_box.coordinates[0][i][0],
-                        url: tweet.getMediaEntries()[0].media_url,
+                        latitude: (tweet.getLocation().bounding_box.coordinates[0][0][1] + tweet.getLocation().bounding_box.coordinates[0][2][1])/2,
+                        longitude: (tweet.getLocation().bounding_box.coordinates[0][0][0] + tweet.getLocation().bounding_box.coordinates[0][1][0])/2,
+                        url: tweet.getMediaEntries()[i].media_url,
                         hashtags: []
                     };
+
                     let tweetHashTags = tweet.getHashTags();
                     for(let j = 0; j < tweetHashTags.length; j++) {
                         mediaEntry.hashtags.push(tweetHashTags[j].text);
                     }
+
                     mediaEntries.push(mediaEntry);
                 }
             }
