@@ -8,7 +8,8 @@ module.exports = Model.extend({
         id: null,
         created_time: null,
         message: null,
-        story: null
+        story: null,
+        provider: 'facebook'
     },
 
     getHashTags() {
@@ -23,7 +24,7 @@ module.exports = Model.extend({
         return matches;
     },
 
-    getCreateDate(){
+    getCreateDate() {
         return this.get('created_time');
     }
 });

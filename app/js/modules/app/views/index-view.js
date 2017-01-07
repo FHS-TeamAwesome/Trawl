@@ -18,8 +18,6 @@ export default View.extend({
     },
 
     postPlaceAt() {
-        // this.EventDispatcher.on('fetched:instagram:photos', this.createMapSection.bind(this));
-
         this.EventDispatcher.on('provider:fetch:complete', this.addSectionHandler.bind(this));
     },
 
@@ -35,16 +33,6 @@ export default View.extend({
     postRender() {
         // adding header section first
         this.addSection(new HeaderSection());
-
-        // if (this.ProviderManager.get('instagram').isAuthenticated()) {
-        //     this.createMapSection();
-        // }
-
-        // if (this.ProviderManager.get('instagram').isAuthenticated() ||
-        //     this.ProviderManager.get('twitter').isAuthenticated() ||
-        //     this.ProviderManager.get('facebook').isAuthenticated()) {
-        //     this.addSection(new ChartView());
-        // }
         
         this.addSectionHandler();
     },
@@ -52,6 +40,10 @@ export default View.extend({
     addSectionHandler() {
         if (this.DataManager.hasHashTags() && !this.checkSectionExist(TagsSection)) {
             this.addTagSection();
+        }
+
+        if (this.DataManager.hasPhotos() && !this.checkSectionExist(MapsSection)) {
+            this.addMapSection();
         }
     },
 
@@ -67,10 +59,29 @@ export default View.extend({
         this.addSection(new TagsSection());
     },
 
-    createMapSection() {
-        var map = new MapsSection();
-        this.addSection(map);
+    addMapSection() {
+        this.addSection(new MapsSection());
+        /*var mediaObj = [];
+        var photos  = [];
 
-        map.createMap(this.ProviderManager.get('instagram').photos.getPhotosWithLocation());
+        photos = this.ProviderManager.get('twitter').tweets.getPhotosWithLocation();
+        for(let photo of photos) {
+            mediaObj.push(photo);
+        }
+
+        photos = this.ProviderManager.get('instagram').photos.getPhotosWithLocation();
+        for(let photo of photos) {
+            mediaObj.push(photo);
+        }
+
+        console.log(mediaObj);
+
+        photos = this.ProviderManager.get('facebook').photos.getPhotosWithLocation();
+        for(let photo of photos) {
+            mediaObj.push(photo);
+        }
+
+        map.createMap();
+        //map.addData();*/
     }
 });
