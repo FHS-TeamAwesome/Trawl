@@ -6,3 +6,4 @@ import LinkHandler from 'app/services/link-handler';
 import ProviderManager from 'app/services/provider-manager';
 import Lightbox from 'app/services/lightbox';
 import DataManager from 'app/services/data-manager';
+import ScrollManager from 'app/services/scroll-manager';

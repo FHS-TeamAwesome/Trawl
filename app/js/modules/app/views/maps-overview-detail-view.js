@@ -41,7 +41,7 @@ export default View.extend({
     },
 
     setLocation() {
-        this.map.setCenter({lat: this.mediaObject.latitude, lng: this.mediaObject.longitude});
+        this.map.panTo({lat: this.mediaObject.latitude, lng: this.mediaObject.longitude});
     }
 
 });
