@@ -45,10 +45,13 @@ module.exports = Collection.extend({
                         url: tweet.getMediaEntries()[0].media_url,
                         hashtags: []
                     };
+
                     let tweetHashTags = tweet.getHashTags();
+
                     for(let j = 0; j < tweetHashTags.length; j++) {
                         mediaEntry.hashtags.push(tweetHashTags[j].text);
                     }
+                    
                     mediaEntries.push(mediaEntry);
                 }
             }

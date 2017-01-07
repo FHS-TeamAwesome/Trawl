@@ -13,7 +13,7 @@ After cloning this repo you need to run `npm install` to install all the needed 
 
 ## First start the Node Server in an own terminal instance:
 ```bash          
-    npm start:dev
+    npm run start:dev
 ```
 
 ## Grunt Commands 
