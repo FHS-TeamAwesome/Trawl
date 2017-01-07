@@ -3,7 +3,7 @@
 import View from 'core/view';
 import HeaderSection from 'app/views/header-section';
 import MapsSection from 'app/views/maps-section';
-import ChartView from 'app/views/chart-view';
+import ActivitySection from 'app/views/activity-section';
 import TagsSection from 'app/views/tags-section';
 
 export default View.extend({
@@ -45,6 +45,11 @@ export default View.extend({
         if (this.DataManager.hasPhotos() && !this.checkSectionExist(MapsSection)) {
             this.addMapSection();
         }
+
+        if (!this.checkSectionExist(ActivitySection)) {
+            this.addActivitySection();
+        }
+
     },
 
     checkSectionExist(SectionInstance) {
@@ -53,6 +58,10 @@ export default View.extend({
                 return true;
             }
         }
+    },
+
+    addActivitySection() {
+        this.addSection( new ActivitySection());
     },
 
     addTagSection() {
