@@ -27,7 +27,7 @@ export default View.extend({
         section.render().placeAt(this.$el);
         this.sections.push(section);
 
-        if (this.sections > 1) {
+        if (this.sections.length > 1) {
             this.EventDispatcher.trigger('scrolling:enable');
         }
     },

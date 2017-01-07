@@ -75,6 +75,8 @@ module.exports = Collection.extend({
                 for(let hashtag of photoHashtags) {
                     if(!hashTagsCountMapping[hashtag.toLowerCase()]) {
                         hashTagsCountMapping[hashtag.toLowerCase()] = {
+                            id: photo.id,
+                            provider: 'instagram',
                             name: hashtag,
                             count: 1
                         };

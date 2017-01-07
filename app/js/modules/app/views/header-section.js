@@ -41,7 +41,7 @@ export default View.extend({
     },
 
     showScrollingIndicator() {
-        // this.$el.find('#scrolling-indicator').addClass('is-visible');
+        this.$el.find('#scrolling-indicator').addClass('is-visible');
     },
 
     setBtnStates() {

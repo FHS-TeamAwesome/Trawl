@@ -1,5 +1,6 @@
 'use strict';
 
+import $ from 'jquery';
 import d3 from 'd3';
 import cloud from 'd3-cloud';
 import _ from 'underscore';
@@ -28,6 +29,13 @@ export default View.extend({
         _.defer(this.createTagCloud.bind(this));
 
         window.addEventListener('resize', _.debounce(this.restartLayout.bind(this), 250), false);
+        this.$container.on('click', 'svg [data-id]', this.onTagClickHandler.bind(this));
+    },
+
+    onTagClickHandler(event) {
+        let { id, provider } = event.target.__data__;
+
+        // get normalized obj from datamanger or provider manager
     },
 
     addHashTagsHandler() {
@@ -50,8 +58,10 @@ export default View.extend({
             .size([this.$container.width(), this.$container.height()])
             .words(this.hashTags.total.map(function(entry) {
                 return {
+                    id: entry.id,
                     text: entry.name, 
-                    size: 10 + entry.count * 20 * window.innerWidth * 0.001
+                    size: 10 + entry.count * 20 * window.innerWidth * 0.001,
+                    provider: entry.provider
                 };
             }))
             .padding(5)
@@ -78,6 +88,7 @@ export default View.extend({
         .selectAll('text')
             .data(words)
         .enter().append('text')
+            .attr('data-id', '1')
             .style('font-size', function(word) { 
                 return word.size + 'px'; 
             })

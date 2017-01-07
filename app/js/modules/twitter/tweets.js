@@ -17,6 +17,8 @@ module.exports = Collection.extend({
             for (let hashtag of tweet.getHashTags()) {
                 if (!hashTagsCountMapping[hashtag.text.toLowerCase()]) {
                     hashTagsCountMapping[hashtag.text.toLowerCase()] = {
+                        id: tweet.id,
+                        provider: 'twitter',
                         name: hashtag.text,
                         count: 1
                     };

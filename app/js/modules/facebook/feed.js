@@ -48,6 +48,8 @@ module.exports = Collection.extend({
             for (let hashtag of post.getHashTags()) {
                 if (!hashTagsCountMapping[hashtag.toLowerCase()]) {
                     hashTagsCountMapping[hashtag.toLowerCase()] = {
+                        id: post.id,
+                        provider: 'facebook',
                         name: hashtag,
                         count: 1
                     };
