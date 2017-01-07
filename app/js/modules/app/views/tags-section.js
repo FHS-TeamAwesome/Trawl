@@ -13,6 +13,9 @@ export default View.extend({
 
         this.DataManager = this.getService('DataManager');
 
+        this.ScrollManager = this.getService('ScrollManager');
+        this.ScrollManager.add(this.$el, 'TagsSection');
+
         this.hashTags = this.DataManager.getHashTags();
 
         this.cloudLayout = null;

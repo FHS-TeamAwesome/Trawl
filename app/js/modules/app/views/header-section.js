@@ -11,6 +11,9 @@ export default View.extend({
     initialize() {
         this.template = HeaderTpl;
         this.ProviderManager = this.getService('ProviderManager');
+
+        this.ScrollManager = this.getService('ScrollManager');
+        this.ScrollManager.add(this.$el,'HeaderSection');
     },
 
     postDestroy() {
