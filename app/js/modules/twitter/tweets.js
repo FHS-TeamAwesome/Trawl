@@ -34,7 +34,7 @@ module.exports = Collection.extend({
         let mediaEntries = [];
 
         for (let tweet of this.models) {
-            if (tweet.getLocation() && tweet.getMediaEntries()[0].media_url) {
+            if (tweet.getLocation() && tweet.getMediaEntries()) {
                 for(let i = 0; i < tweet.getMediaEntries().length; i++) {
 
                     let mediaEntry = {
