@@ -60,7 +60,8 @@ export default View.extend({
                     x,
 //            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
                     y
-                ]
+                ],
+                type: 'spline'
             },
             color: {
                 pattern: ['#B93A96']
@@ -69,7 +70,7 @@ export default View.extend({
                 show: false
             },
             legend: {
-                show: true
+                show: false
             },
             zoom: {
                 enabled: false
@@ -86,9 +87,6 @@ export default View.extend({
                 }
             }
         });
-        setTimeout(function () {
-            chart.transform('spline');
-        }, 4000);
     },
 
     getLastDays(days) {
