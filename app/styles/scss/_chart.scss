@@ -1,0 +1,16 @@
+.c3-axis-y text {
+  fill: #ffffff;
+  font-size:12px;
+}
+.c3-axis-x text {
+  font-size:12px;
+  fill: #ffffff;
+}
+
+.c3 path, .c3 line, .tick text {
+  stroke: white;
+}
+
+.c3-legend-item .c3-legend-item-data {
+  stroke: white;
+}

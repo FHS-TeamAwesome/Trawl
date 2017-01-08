@@ -42,7 +42,7 @@ export default View.extend({
             if (frequencyMapping[key] !== undefined) {
                 frequencyMapping[key]++;
             }
-        };
+        }
 
         let x = Object.keys(frequencyMapping);
         let y = Object.values(frequencyMapping);
@@ -62,6 +62,21 @@ export default View.extend({
                     y
                 ]
             },
+            color: {
+                pattern: ['#B93A96']
+            },
+            point: {
+                show: false
+            },
+            legend: {
+                show: true
+            },
+            zoom: {
+                enabled: false
+            },
+            names: {
+                data: 'Action per day',
+            },
             axis: {
                 x: {
                     type: 'timeseries',
@@ -71,6 +86,9 @@ export default View.extend({
                 }
             }
         });
+        setTimeout(function () {
+            chart.transform('spline');
+        }, 4000);
     },
 
     getLastDays(days) {
