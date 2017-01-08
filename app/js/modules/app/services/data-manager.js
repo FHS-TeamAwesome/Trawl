@@ -89,4 +89,45 @@ ServiceLocator.create('DataManager', class DataManager {
         return this.getPhotos().total.length > 0;
     }
 
+    getActivities() {
+
+        let twitterActivities = [];
+        let facebookActivities = [];
+        let instagramActivities = [];
+        let total = [];
+
+     /**   if (
+            this.ProviderManager.get('twitter').isAuthenticated() &&
+            this.ProviderManager.get('twitter').tweets.getActivities()
+        ) {
+            twitterPhotos = this.ProviderManager.get('twitter').tweets.getPhotosWithLocation();
+        }
+
+        if (
+            this.ProviderManager.get('instagram').isAuthenticated() &&
+            this.ProviderManager.get('instagram').photos.getActivities()
+        ) {
+            instagramPhotos = this.ProviderManager.get('instagram').photos.getPhotosWithLocation();
+        }
+**/
+        if (
+            this.ProviderManager.get('facebook').isAuthenticated() &&
+            this.ProviderManager.get('facebook').activities.get('activities')
+
+        ) {
+            facebookActivities = (this.ProviderManager.get('facebook').activities.get('activities'));
+        }
+
+        //create total
+        return {
+            instagram: instagramActivities,
+            twitter: twitterActivities,
+            facebook: facebookActivities,
+            total: total.concat(twitterActivities, instagramActivities, facebookActivities)
+        };
+    }
+
+    hasActivities() {
+        return this.getActivity().total.length > 0;
+    }
 });
