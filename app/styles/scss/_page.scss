@@ -6,6 +6,10 @@
     min-height: 600px;
     position: relative;
 
+    @media only screen and (max-width: $screen-md) {
+        min-height: 700px;
+    }
+
     &::before {
         content: "";
         display: block;
@@ -82,6 +86,7 @@
     z-index: 5;
     font-size: 70px;
     opacity: 0;
+    text-align: center;
     animation: pulse 3s ease infinite;
     transition: bottom 1s linear, opacity .5s ease-in;
 

@@ -4,7 +4,7 @@
 
 ## License
 
-Code is licensed under ISC. Content is licensed under CC-BY-SA 3.0. See the LICENSE file for details.
+Code is licensed under MIT. Content is licensed under CC-BY-SA 3.0. See the LICENSE file for details.
 
 
 ## Setup

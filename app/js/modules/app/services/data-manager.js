@@ -1,6 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
+import _ from 'underscore';
 import ServiceLocator from 'core/service-locator';
 import ProviderManager from 'app/services/provider-manager';
 
@@ -49,6 +50,27 @@ ServiceLocator.create('DataManager', class DataManager {
         return this.getHashTags().total.length > 0;
     }
 
+    getHashTagContent(ids, providerName) {
+        let entries = [];
+        let providerCollection = {
+            'twitter': this.ProviderManager.get('twitter').tweets,
+            'facebook': this.ProviderManager.get('facebook').feed,
+            'instagram': this.ProviderManager.get('instagram').photos
+        };
+
+        entries = _.map(ids, function(id) {
+            let entry = providerCollection[providerName].get(id);
+
+            return {
+                url: entry.getUrl(),
+                text: entry.getText(),
+                thumbnail: entry.getThumbnail()
+            };
+        });
+
+        return entries;
+    }
+
     getPhotos() {
         let twitterPhotos = [];
         let facebookPhotos = [];
@@ -88,5 +110,4 @@ ServiceLocator.create('DataManager', class DataManager {
     hasPhotos() {
         return this.getPhotos().total.length > 0;
     }
-
 });

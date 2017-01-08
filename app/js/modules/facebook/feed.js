@@ -151,13 +151,14 @@ module.exports = Collection.extend({
             for (let hashtag of post.getHashTags()) {
                 if (!hashTagsCountMapping[hashtag.toLowerCase()]) {
                     hashTagsCountMapping[hashtag.toLowerCase()] = {
-                        id: post.id,
+                        ids: [post.id],
                         provider: 'facebook',
                         name: hashtag,
                         count: 1
                     };
                 }
                 else {
+                    hashTagsCountMapping[hashtag.toLowerCase()].ids.push(post.id);
                     hashTagsCountMapping[hashtag.toLowerCase()].count++;
                 }
             }

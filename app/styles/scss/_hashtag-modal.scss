@@ -1,0 +1,29 @@
+.hashtag-modal-items {
+    & > li {
+        display: block;
+        color: #fff;
+        background-color: #333;
+        border-bottom: 1px solid #222;
+        border-top: 1px solid #444;
+
+        &.is-hoverable:hover {
+            background-color: #2795e9;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+}
+
+.hashtag-modal-item-text {
+    padding: 15px 10px;
+}
+
+.hashtag-modal-item-provider {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #fff;
+}

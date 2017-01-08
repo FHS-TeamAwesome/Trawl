@@ -28,10 +28,12 @@ module.exports = Collection.extend({
 
         let photoArr = [];
 
-        for(let image in data.data ) {
+        for (let image in data.data) {
             let photo;
+
             if (data.data[image].location !== null) {
                 photo = new Photo({
+                    id: data.data[image].id,
                     locationName: data.data[image].location.name,
                     latitude: data.data[image].location.latitude,
                     longitude: data.data[image].location.longitude,
@@ -41,6 +43,7 @@ module.exports = Collection.extend({
             }
             else {
                 photo = new Photo({
+                    id: data.data[image].id,
                     locationName: null,
                     latitude: null,
                     longitude: null,
@@ -48,6 +51,7 @@ module.exports = Collection.extend({
                     hashtags: data.data[image].tags
                 });
             }
+
             photoArr.push(photo);
         }
 
@@ -75,13 +79,14 @@ module.exports = Collection.extend({
                 for(let hashtag of photoHashtags) {
                     if(!hashTagsCountMapping[hashtag.toLowerCase()]) {
                         hashTagsCountMapping[hashtag.toLowerCase()] = {
-                            id: photo.id,
+                            ids: [photo.id],
                             provider: 'instagram',
                             name: hashtag,
                             count: 1
                         };
                     }
                     else {
+                        hashTagsCountMapping[hashtag.toLowerCase()].ids.push(photo.id);
                         hashTagsCountMapping[hashtag.toLowerCase()].count++;
                     }
                 }

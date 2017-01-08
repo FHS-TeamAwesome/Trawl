@@ -129,5 +129,21 @@ module.exports = Model.extend({
 
     getMediaEntries() {
         return this.get('entities').media || [];
+    },
+
+    getUrl() {
+        return 'https://twitter.com/' + this.get('user').screen_name + '/status/' + this.get('id_str');
+    },
+
+    getText() {
+        return this.get('text');
+    },
+
+    getThumbnail() {
+        if (!this.getMediaEntries().length) {
+            return null;
+        }
+
+        return this.getMediaEntries()[0].media_url;
     }
 });

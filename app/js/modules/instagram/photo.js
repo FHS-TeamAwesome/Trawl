@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Auth Schema
+ * Photos Schema
  *
 {
     "data": [{
@@ -124,6 +124,22 @@ module.exports = Model.extend({
         longitude: null,
         url: null,
         hashtags: null
+    },
+
+    getUrl() {
+        return this.get('link');
+    },
+
+    getText() {
+        if (this.get('caption')) {
+            return null;
+        }
+
+        return this.get('caption').text;
+    },
+
+    getThumbnail() {
+        return this.images.thumbnail.url;
     }
 
 });
