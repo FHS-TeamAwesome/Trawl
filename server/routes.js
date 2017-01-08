@@ -63,7 +63,11 @@ module.exports = function(app, passport) {
     });
 
     // route for instagram authentication and login
-    app.get('/auth/instagram', passport.authenticate('instagram'));
+    app.get('/auth/instagram', passport.authenticate('instagram', {
+        scope: config.get('Client.providers.instagram.scope'),
+        failureRedirect: '/signup',
+        session: false
+    }));
 
     // handle the callback after instagram has authenticated the user
     app.get('/auth/instagram/callback', passport.authenticate('instagram', { 

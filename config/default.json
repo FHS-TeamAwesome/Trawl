@@ -17,7 +17,7 @@
                 "owner": "Theresa Elisa",
                 "api": "https://graph.facebook.com",
                 "consumerKey": "722531051233683",
-                "permissions": ["pages_show_list", "email", "user_photos", "user_events", "user_posts", "read_custom_friendlists", "user_friends"],
+                "permissions": ["pages_show_list", "email", "user_photos", "user_events", "user_posts", "read_custom_friendlists", "user_friends", "user_likes"],
                 "consumerSecret": "7bbe074c8cee9d9d43fe6736414d3a82",
                 "callbackURL": "http://localhost:3000/auth/facebook/callback",
                 "profileFields": ["photos"],
@@ -26,6 +26,7 @@
             "instagram": {
                 "owner": "Daxi95",
                 "api": "https://api.instagram.com/v1",
+                "scope": ["public_content"],
                 "consumerKey": "f1d78939afa047db8b7f586592aeca24",
                 "consumerSecret": "a0a181711cf84b66b71d7c6d1fbe6e1e",
                 "callbackURL": "http://localhost:3000/auth/instagram/callback"
