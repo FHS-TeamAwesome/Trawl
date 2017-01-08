@@ -81,6 +81,7 @@
     background-color: #bada55;
     transition: left 0.8s ease-in-out;
     text-align: left;
+    border-radius: 5px;
 
     @media only screen and (max-width: $screen-md) {
         text-align: center;

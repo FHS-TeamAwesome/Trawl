@@ -3,7 +3,7 @@
 import View from 'core/view';
 import HeaderSection from 'app/views/header-section';
 import MapsSection from 'app/views/maps-section';
-import ChartView from 'app/views/chart-view';
+import ActivitySection from 'app/views/activity-section';
 import TagsSection from 'app/views/tags-section';
 
 export default View.extend({
@@ -45,6 +45,11 @@ export default View.extend({
         if (this.DataManager.hasPhotos() && !this.checkSectionExist(MapsSection)) {
             this.addMapSection();
         }
+
+        if (this.DataManager.hasActivities() && !this.checkSectionExist(ActivitySection)) {
+            this.addActivitySection();
+        }
+
     },
 
     checkSectionExist(SectionInstance) {
@@ -55,33 +60,15 @@ export default View.extend({
         }
     },
 
+    addActivitySection() {
+        this.addSection(new ActivitySection());
+    },
+
     addTagSection() {
         this.addSection(new TagsSection());
     },
 
     addMapSection() {
         this.addSection(new MapsSection());
-        /*var mediaObj = [];
-        var photos  = [];
-
-        photos = this.ProviderManager.get('twitter').tweets.getPhotosWithLocation();
-        for(let photo of photos) {
-            mediaObj.push(photo);
-        }
-
-        photos = this.ProviderManager.get('instagram').photos.getPhotosWithLocation();
-        for(let photo of photos) {
-            mediaObj.push(photo);
-        }
-
-        console.log(mediaObj);
-
-        photos = this.ProviderManager.get('facebook').photos.getPhotosWithLocation();
-        for(let photo of photos) {
-            mediaObj.push(photo);
-        }
-
-        map.createMap();
-        //map.addData();*/
     }
 });

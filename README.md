@@ -22,3 +22,13 @@ After cloning this repo you need to run `npm install` to install all the needed 
     grunt build             builds all files for deployment
 ```
 
+Tasks
+ - Fade in Hashtagcloud (create scroll service) [DONE]
+ - Header textilate effect                      [DONE]
+ - fix map design                               [DONE]
+ - add activity section                         [DONE]
+ - remove subpages for release                  [DONE]
+ - fix routing change bug (destroy correctly)   
+ - create master release                
+ - deploy
+ - create presentation

@@ -13,7 +13,7 @@ module.exports = Model.extend({
 
         for (let activityEntity of activityEntities) {
             let activity = activityEntity.getActivities();
-
+            
             for (let data of activity) {
                 mergedActivities.push(data);
             }

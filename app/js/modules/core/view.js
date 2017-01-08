@@ -18,7 +18,7 @@ export default Backbone.View.extend({
 
     render(data) {
         var tpl = _.template(this.template);
-        var data = data || this.serialize();
+        data = data || this.serialize();
 
         this.$el.html(tpl(data));
         this.postRender();

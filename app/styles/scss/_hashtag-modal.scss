@@ -1,6 +1,8 @@
 .hashtag-modal-items {
+    max-height: 600px;
+    overflow: auto;
+    
     & > li {
-        display: block;
         color: #fff;
         background-color: #333;
         border-bottom: 1px solid #222;

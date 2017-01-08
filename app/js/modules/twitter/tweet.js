@@ -145,5 +145,9 @@ module.exports = Model.extend({
         }
 
         return this.getMediaEntries()[0].media_url;
+    },
+
+    getCreateDate() {
+       return this.get('created_at');
     }
 });

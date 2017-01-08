@@ -1,0 +1,58 @@
+.chart-container {
+    background-color: #333;
+}
+
+.c3-axis-y text {
+  fill: #ffffff;
+  font-size:12px;
+}
+.c3-axis-x text {
+  font-size: 12px;
+  fill: #ffffff;
+}
+
+.c3 path {
+  stroke: #444;
+}
+
+.c3 line {
+    stroke: #444;
+    fill: none;
+}
+
+.tick text {
+    fill: #aaa;
+}
+
+.c3-legend-item .c3-legend-item-data {
+  stroke: white;
+}
+
+.c3-legend-item text {
+  fill: white;
+}
+
+.c3-line {
+    stroke-width: 5px;
+}
+
+.c3-xgrids line,
+.c3-ygrids line {
+    stroke: #444;
+    stroke-dasharray: 0;
+}
+
+.c3-tooltip {
+    border-collapse: initial;
+}
+
+.c3-tooltip th,
+.c3-tooltip td {
+    background-color: #444;
+    font-size: 16px;
+    border: 0;
+}
+
+.c3-tooltip th {
+    text-align: center;
+}

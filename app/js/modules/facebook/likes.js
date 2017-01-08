@@ -262,6 +262,12 @@ module.exports = Model.extend({
         this.accessToken = accessToken;
     },
 
+    defaults() {
+        return {
+            likes: []
+        };
+    },
+
     url() {
         return config.get('Client.providers.facebook.api') + '/me/?fields=likes.limit(999)&access_token=' + this.accessToken;
     },

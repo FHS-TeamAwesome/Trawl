@@ -1,3 +1,7 @@
+.about-text {
+    visibility: hidden;
+}
+
 .page-header {
     background: url("/img/header-bg.jpg") center top;
     background-repeat: no-repeat;
@@ -5,6 +9,7 @@
     height: 100vh;
     min-height: 600px;
     position: relative;
+    overflow: hidden;
 
     @media only screen and (max-width: $screen-md) {
         min-height: 700px;
@@ -61,6 +66,7 @@
 .page-section-description {
     font-size: 18px;
     padding: 0 20px;
+    visibility: hidden;
 }
 
 @keyframes pulse {

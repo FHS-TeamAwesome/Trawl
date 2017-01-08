@@ -38,6 +38,11 @@ export default View.extend({
 
         this.setBtnStates();
         this.updateProgressBar();
+        _.delay(this.showDescription.bind(this), 1000);
+    },
+
+    showDescription() {
+        this.getService('Textillate').shuffle(this.$el.find('.about-text'));
     },
 
     showScrollingIndicator() {

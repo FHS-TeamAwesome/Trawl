@@ -16,16 +16,20 @@ export default View.extend({
     photos: null,
     isCenterSet: false,
     mapsOverviewContainer: null,
+    key: 'AIzaSyAh-kj7TyOmyZqhXADnBJOQGP3iDlVu85E',
 
     initialize() {
         this.template = MapsTpl;
 
         this.DataManager = this.getService('DataManager');
 
-        if(this.DataManager.hasPhotos())
-            this.photos = this.DataManager.getPhotos();
+        this.ScrollManager = this.getService('ScrollManager');
 
-        GoogleMapsLoader.KEY = "AIzaSyAh-kj7TyOmyZqhXADnBJOQGP3iDlVu85E";
+        if(this.DataManager.hasPhotos()) {
+            this.photos = this.DataManager.getPhotos();
+        }
+
+        GoogleMapsLoader.KEY = this.key;
         GoogleMapsLoader.LANGUAGE = 'de';
 
         GoogleMapsLoader.load(function(google) {
@@ -70,10 +74,12 @@ export default View.extend({
 
         if(this.isCenterSet === false) {
             this.isCenterSet = true;
+
             this.map.setCenter({lat: this.photos.total[0].latitude, lng: this.photos.total[0].longitude});
         }
 
         for(var i = 0; i < this.photos.total.length; i++) {
+
             bounds.push(new this.google.maps.LatLngBounds(
                 new this.google.maps.LatLng(this.photos.total[i].latitude - 0.065, this.photos.total[i].longitude - 0.1),
                 new this.google.maps.LatLng(this.photos.total[i].latitude + 0.065, this.photos.total[i].longitude + 0.1)));
@@ -88,10 +94,17 @@ export default View.extend({
 
     postPlaceAt() {
         window.addEventListener('resize', this.changeSize.bind(this));
+
+        this.ScrollManager.add(this.$el, this.onScrollEnter.bind(this));
     },
 
     postRender() {
         this.EventDispatcher.on('provider:fetch:complete', this.addPhotosHandler.bind(this));
+    },
+
+    onScrollEnter() {
+        this.$el.find('.map').addClass('is-presented');
+        this.getService('Textillate').shuffle(this.$el.find('.page-section-description'));
     },
 
     addPhotosHandler() {
@@ -102,7 +115,8 @@ export default View.extend({
         for(let o of this.overlay) {
             o.setMap(null);
         }
-
+        this.overlay = [];
+        this.isCenterSet = false;
         this.addData();
     },
 

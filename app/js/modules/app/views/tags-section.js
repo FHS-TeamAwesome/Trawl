@@ -15,6 +15,8 @@ export default View.extend({
 
         this.DataManager = this.getService('DataManager');
 
+        this.ScrollManager = this.getService('ScrollManager');
+
         this.hashTags = this.DataManager.getHashTags();
 
         this.cloudLayout = null;
@@ -33,6 +35,8 @@ export default View.extend({
 
         window.addEventListener('resize', _.debounce(this.restartLayout.bind(this), 250), false);
         this.$container.on('click', 'svg text', this.onTagClickHandler.bind(this));
+
+        this.ScrollManager.add(this.$el, this.onScrollEnter.bind(this));
     },
 
     onTagClickHandler(event) {
@@ -63,6 +67,12 @@ export default View.extend({
         modal.placeAt('body');
 
         return modal;
+    },
+
+    onScrollEnter() {
+        this.$container.addClass('is-presented');
+
+        this.getService('Textillate').shuffle(this.$el.find('.page-section-description'));
     },
 
     addHashTagsHandler() {

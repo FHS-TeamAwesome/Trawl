@@ -22,8 +22,9 @@ export default View.extend({
         this.$el.find('.media-picture').attr('src', this.mediaObject.url);
 
         let mediaDescription = this.$el.find('.media-description');
-        mediaDescription.append('<p>');
+
         mediaDescription.append('Standort: ' + this.mediaObject.locationName + '<br>');
+        
         if(this.mediaObject.hashtags) {
             mediaDescription.append('Hashtags: ');
             for (let i = 0; i < this.mediaObject.hashtags.length; i++) {
@@ -33,7 +34,6 @@ export default View.extend({
                     mediaDescription.append('#' + this.mediaObject.hashtags[i]);
             }
         }
-        mediaDescription.append('</p>');
 
         this.$el.click(function() {
             this.setLocation();
@@ -41,7 +41,7 @@ export default View.extend({
     },
 
     setLocation() {
-        this.map.setCenter({lat: this.mediaObject.latitude, lng: this.mediaObject.longitude});
+        this.map.panTo({lat: this.mediaObject.latitude, lng: this.mediaObject.longitude});
     }
 
 });
