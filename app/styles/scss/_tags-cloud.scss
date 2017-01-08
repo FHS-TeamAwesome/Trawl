@@ -1,4 +1,20 @@
 .tags-cloud-container {
     background: #333;
-    box-shadow: inset 0 0 5em 5em rgba(0, 0, 0, .2)
+    box-shadow: inset 0 0 5em 5em rgba(0, 0, 0, .2);
+
+    &.is-presented {
+        svg text {
+            transform: scale(1);
+        }
+    }
+
+    svg text {
+        transition: transform .4s ease-in;
+        transform: scale(0);
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }

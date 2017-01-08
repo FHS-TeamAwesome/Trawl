@@ -9,6 +9,8 @@
 @import "list";
 @import "btn";
 @import "logo";
+@import "modal";
+@import "hashtag-modal";
 @import "navigation";
 @import "tags-cloud";
 @import "util";
@@ -33,4 +35,8 @@
 body {
     background-color: $primaryColor;
     color: #fff;
+
+    &.no-scrolling {
+        overflow: hidden;
+    }
 }

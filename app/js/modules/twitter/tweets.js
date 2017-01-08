@@ -17,11 +17,14 @@ module.exports = Collection.extend({
             for (let hashtag of tweet.getHashTags()) {
                 if (!hashTagsCountMapping[hashtag.text.toLowerCase()]) {
                     hashTagsCountMapping[hashtag.text.toLowerCase()] = {
+                        ids: [tweet.id],
+                        provider: 'twitter',
                         name: hashtag.text,
                         count: 1
                     };
                 }
                 else {
+                    hashTagsCountMapping[hashtag.text.toLowerCase()].ids.push(tweet.id);
                     hashTagsCountMapping[hashtag.text.toLowerCase()].count++;
                 }
             }
@@ -46,6 +49,7 @@ module.exports = Collection.extend({
                     };
 
                     let tweetHashTags = tweet.getHashTags();
+
                     for(let j = 0; j < tweetHashTags.length; j++) {
                         mediaEntry.hashtags.push(tweetHashTags[j].text);
                     }
@@ -56,5 +60,22 @@ module.exports = Collection.extend({
         }
 
         return mediaEntries;
+    },
+
+    getActivities() {
+        let activities = [];
+
+        for (let tweet of this.models) {
+            let activity = {
+                id: tweet.id,
+                type: 'tweet',
+                created_time: tweet.getCreateDate(),
+                provider: 'facebook'
+            };
+
+            activities.push(activity);
+        }
+
+        return activities;
     }
 });

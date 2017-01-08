@@ -25,7 +25,7 @@ export default View.extend({
         section.render().placeAt(this.$el);
         this.sections.push(section);
 
-        if (this.sections > 1) {
+        if (this.sections.length > 1) {
             this.EventDispatcher.trigger('scrolling:enable');
         }
     },
@@ -46,7 +46,7 @@ export default View.extend({
             this.addMapSection();
         }
 
-        if (!this.checkSectionExist(ActivitySection)) {
+        if (this.DataManager.hasActivities() && !this.checkSectionExist(ActivitySection)) {
             this.addActivitySection();
         }
 
@@ -61,7 +61,7 @@ export default View.extend({
     },
 
     addActivitySection() {
-        this.addSection( new ActivitySection());
+        this.addSection(new ActivitySection());
     },
 
     addTagSection() {

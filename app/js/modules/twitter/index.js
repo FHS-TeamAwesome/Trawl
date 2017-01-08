@@ -4,6 +4,7 @@ import Model from 'core/model';
 import Auth from 'twitter/auth';
 import Tweets from 'twitter/tweets';
 import Likes from 'twitter/likes';
+import Activities from 'twitter/activities';
 import $ from 'jquery';
 
 module.exports = Model.extend({
@@ -21,6 +22,8 @@ module.exports = Model.extend({
         return $.when(
             this.tweets.fetch(),
             this.likes.fetch()
-        );
+        ).then(function() {
+            this.activities = new Activities([this.tweets, this.likes]);
+        }.bind(this));
     }
 });

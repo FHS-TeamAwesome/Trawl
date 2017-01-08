@@ -26,5 +26,17 @@ module.exports = Model.extend({
 
     getCreateDate() {
         return this.get('created_time');
+    },
+
+    getUrl() {
+        return null;
+    },
+
+    getText() {
+        return this.get('message');
+    },
+
+    getThumbnail() {
+        return null;
     }
 });

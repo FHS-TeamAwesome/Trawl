@@ -9,6 +9,11 @@
     height: 100vh;
     min-height: 600px;
     position: relative;
+    overflow: hidden;
+
+    @media only screen and (max-width: $screen-md) {
+        min-height: 700px;
+    }
 
     &::before {
         content: "";
@@ -62,4 +67,37 @@
     font-size: 18px;
     padding: 0 20px;
     visibility: hidden;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+}
+
+.page-scrolling-indicator {
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    padding: 15px;
+    margin-left: -50px;
+    z-index: 5;
+    font-size: 70px;
+    opacity: 0;
+    text-align: center;
+    animation: pulse 3s ease infinite;
+    transition: bottom 1s linear, opacity .5s ease-in;
+
+    &.is-visible {
+        bottom: 0;
+        opacity: 1;
+    }
 }

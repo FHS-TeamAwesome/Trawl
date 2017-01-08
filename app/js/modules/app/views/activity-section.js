@@ -10,33 +10,34 @@ let ChartTpl = require('app/templates/partials/chart.html');
 export default View.extend({
     initialize() {
         this.template = ChartTpl;
+        
+        this.chart = null;
+
         this.ProviderManager = this.getService('ProviderManager');
+
         this.DataManager = this.getService('DataManager');
+
+        this.ScrollManager = this.getService('ScrollManager');
+    },
+
+    postDestroy() {
+        this.EventDispatcher.off('provider:fetch:complete', this.addSectionHandler.bind(this));
     },
 
     postPlaceAt() {
         _.defer(this.createChart.bind(this));
+
+        this.EventDispatcher.on('provider:fetch:complete', this.reloadData.bind(this));
     },
 
-    createChart() {
-
-        /**let myData = {};
-        myData.columns = [];
-        myData.xFormat = '%d/%m/%Y';
-        myData.x = 'days';
-        myData.y = 'frequency';
-        myData.columns.push(['days','16/12/2016', '10/12/2016', '13/12/2016']);
-        myData.columns.push(['frequency','1','2','3','4','5','6','7']);
-**/
-        let daysFormated = ['x'];
+    getActivityFrequency(days, activities) {
         let frequencyMapping = {};
 
-        for (let day of this.getLastDays(300)) {
-            daysFormated.push(day);
+        for (let day of this.getLastDays(days)) {
             frequencyMapping[day] = 0;
         }
 
-        for (let activityDay of this.DataManager.getActivities().total) {
+        for (let activityDay of activities) {
             let key = moment(activityDay.created_time).format('YYYY-MM-DD');
 
             if (frequencyMapping[key] !== undefined) {
@@ -44,51 +45,94 @@ export default View.extend({
             }
         }
 
-        let x = Object.keys(frequencyMapping);
-        let y = Object.values(frequencyMapping);
+        return frequencyMapping;
+    },
 
-        x.unshift('x');
-        y.unshift('data');
+    reloadData() {
+        if (this.chart) {
+            this.chart.destroy();
+        }
 
-        console.log(x,y);
-        let chart = c3.generate({
+        this.createChart();
+    },
+
+    createChart() {
+        let that = this;
+        let timeline = Object.keys(this.getActivityFrequency(100, []));
+        let facebookActivities = Object.values(this.getActivityFrequency(
+            100, 
+            this.DataManager.getActivities().facebook
+        ));
+
+        let twitterActivities = Object.values(this.getActivityFrequency(
+            100, 
+            this.DataManager.getActivities().twitter
+        ));
+
+        let instagramActivities = Object.values(this.getActivityFrequency(
+            100, 
+            this.DataManager.getActivities().instagram
+        ));
+
+        timeline.unshift('Time');
+        facebookActivities.unshift('Facebook');
+        twitterActivities.unshift('Twitter');
+        instagramActivities.unshift('Instagram');
+
+        this.chart = c3.generate({
             bindto: '#chart',
             data: {
-                x: 'x',
-//        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
+                x: 'Time',
+                type: 'spline',
                 columns: [
-                    x,
-//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
-                    y
-                ]
-            },
-            color: {
-                pattern: ['#B93A96']
-            },
-            point: {
-                show: false
-            },
-            legend: {
-                show: true
-            },
-            zoom: {
-                enabled: false
-            },
-            names: {
-                data: 'Action per day',
+                    timeline,
+                    facebookActivities,
+                    twitterActivities,
+                    instagramActivities
+                ],
+
+                colors: {
+                    'Facebook': '#3B5998',
+                    'Twitter': '#55acee',
+                    'Instagram': '#8a3ab9'
+                }
             },
             axis: {
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: '%Y-%m-%d'
+                        format: '%m.%Y'
                     }
                 }
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+
+            oninit: function() {
+                let rect = this.main.append('rect')
+                    .style('fill', '#333')
+                    .attr('x', 0.5)
+                    .attr('y', -0.5)
+                    .attr('width', this.width)
+                    .attr('height', this.height);
+
+                that.ScrollManager.add(that.$el, function() {
+                    that.getService('Textillate').shuffle(that.$el.find('.page-section-description'));
+
+                    rect
+                        .transition().duration(2000)
+                        .attr('x', this.width)
+                        .attr('width', 0)
+                        .remove();
+                }.bind(this));
             }
         });
-        setTimeout(function () {
-            chart.transform('spline');
-        }, 4000);
     },
 
     getLastDays(days) {
@@ -96,7 +140,7 @@ export default View.extend({
         let today = 0;
         let passedDaysTotal = [];
 
-        while( today < passedDays) {
+        while (today < passedDays) {
             passedDaysTotal.push(moment().subtract(passedDays, 'days').format('YYYY-MM-DD'));
             passedDays--;
         }

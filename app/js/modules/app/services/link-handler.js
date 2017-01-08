@@ -16,9 +16,8 @@ ServiceLocator.create('LinkHandler', Backbone.Router.extend({
     openLinkHandler(event) {
         let $el = $(event.currentTarget);
 
-        event.preventDefault();
-
         if ($el.get(0).host === window.location.host) {
+            event.preventDefault();
             this.navigate($el.attr('href'), { trigger: true });
         }
     }

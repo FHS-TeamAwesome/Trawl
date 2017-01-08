@@ -1,14 +1,20 @@
 $mapOverviewWidth: 500px;
 
 .map {
-    width: calc(100% - 504px);
+    width: calc(100% - 500px);
     display: inline-block;
     height: 600px;
     background-color: black;
     margin: 0 auto;
+    filter: blur(10px);
+    transition: filter .5s linear;
 
     @media only screen and (max-width: $screen-md) {
         width: 100%;
+    }
+
+    &.is-presented {
+        filter: blur(0px);
     }
 }
 
@@ -42,36 +48,34 @@ $mapOverviewWidth: 500px;
 }
 
 .media-container {
-    height: 70px;
     width: $mapOverviewWidth;
-    background-color: black;
     cursor: pointer;
-    border-bottom: 1px solid #555;
+    color: #fff;
+    background-color: #333;
+    border-bottom: 1px solid #222;
+    border-top: 1px solid #444;
+    overflow: hidden;
+    padding: 10px;
+
+    &:hover {
+        background-color: #2795e9;
+    }
 }
 
 .media-picture-container {
     height: 60px;
     width: 60px;
-    margin: 5px 0 0 5px;
-    display: inline-block;
-    background-color: red;
+    margin-right: 15px;
+    background-color: #e5e5e5;
+    float: left;
+    border: 2px solid #fff;
 }
 
 .media-picture {
-    height: 60px;
-    width: 60px;
+    height: 100%;
+    width: 100%;
 }
 
 .media-description {
-    width: 430px;
-    height: 60px;
-    margin-top: 5px;
-    padding-left: 20px;
-    float: right;
-    background-color: #1C1D21;
-    overflow: hidden;
-}
-
-.media-description p {
-    margin-top: -5px;
+    
 }

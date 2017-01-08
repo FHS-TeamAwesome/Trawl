@@ -11,9 +11,6 @@ export default View.extend({
     initialize() {
         this.template = HeaderTpl;
         this.ProviderManager = this.getService('ProviderManager');
-
-        this.ScrollManager = this.getService('ScrollManager');
-        this.ScrollManager.add(this.$el,'HeaderSection');
     },
 
     postDestroy() {
@@ -41,10 +38,15 @@ export default View.extend({
 
         this.setBtnStates();
         this.updateProgressBar();
+        _.delay(this.showDescription.bind(this), 1000);
+    },
+
+    showDescription() {
+        this.getService('Textillate').shuffle(this.$el.find('.about-text'));
     },
 
     showScrollingIndicator() {
-        // this.$el.find('#scrolling-indicator').addClass('is-visible');
+        this.$el.find('#scrolling-indicator').addClass('is-visible');
     },
 
     setBtnStates() {

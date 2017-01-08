@@ -16,9 +16,9 @@ export default Backbone.View.extend({
     // view, but if they don't, your views will get a div as their template.
     template: '<div></div>',
 
-    render() {
+    render(data) {
         var tpl = _.template(this.template);
-        var data = this.serialize();
+        data = data || this.serialize();
 
         this.$el.html(tpl(data));
         this.postRender();

@@ -24,10 +24,10 @@ export default View.extend({
         this.DataManager = this.getService('DataManager');
 
         this.ScrollManager = this.getService('ScrollManager');
-        this.ScrollManager.add(this.$el, 'MapsSection');
 
-        if(this.DataManager.hasPhotos())
+        if(this.DataManager.hasPhotos()) {
             this.photos = this.DataManager.getPhotos();
+        }
 
         GoogleMapsLoader.KEY = this.key;
         GoogleMapsLoader.LANGUAGE = 'de';
@@ -94,10 +94,17 @@ export default View.extend({
 
     postPlaceAt() {
         window.addEventListener('resize', this.changeSize.bind(this));
+
+        this.ScrollManager.add(this.$el, this.onScrollEnter.bind(this));
     },
 
     postRender() {
         this.EventDispatcher.on('provider:fetch:complete', this.addPhotosHandler.bind(this));
+    },
+
+    onScrollEnter() {
+        this.$el.find('.map').addClass('is-presented');
+        this.getService('Textillate').shuffle(this.$el.find('.page-section-description'));
     },
 
     addPhotosHandler() {
