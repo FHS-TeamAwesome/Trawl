@@ -1,0 +1,81 @@
+$mapOverviewWidth: 500px;
+
+.map {
+    width: calc(100% - 500px);
+    display: inline-block;
+    height: 600px;
+    background-color: black;
+    margin: 0 auto;
+    filter: blur(10px);
+    transition: filter .5s linear;
+
+    @media only screen and (max-width: $screen-md) {
+        width: 100%;
+    }
+
+    &.is-presented {
+        filter: blur(0px);
+    }
+}
+
+.map-overview {
+    display: inline-block;
+    float: right;
+    width: $mapOverviewWidth;
+    height: 600px;
+    background-color: black;
+    overflow: scroll;
+    border-top: 1px solid #555;
+    border-bottom: 1px solid #555;
+
+    @media only screen and (max-width: $screen-md) {
+        display: none;
+    }
+}
+
+.map-overview ul {
+    list-style: none outside none;
+}
+
+.map-overview ul, .map-overview li {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+.media-container {
+    width: $mapOverviewWidth;
+    cursor: pointer;
+    color: #fff;
+    background-color: #333;
+    border-bottom: 1px solid #222;
+    border-top: 1px solid #444;
+    overflow: hidden;
+    padding: 10px;
+
+    &:hover {
+        background-color: #2795e9;
+    }
+}
+
+.media-picture-container {
+    height: 60px;
+    width: 60px;
+    margin-right: 15px;
+    background-color: #e5e5e5;
+    float: left;
+    border: 2px solid #fff;
+}
+
+.media-picture {
+    height: 100%;
+    width: 100%;
+}
+
+.media-description {
+    
+}

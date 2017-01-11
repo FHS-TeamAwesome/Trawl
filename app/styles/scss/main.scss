@@ -1,0 +1,42 @@
+@import "variables";
+@import "../../../node_modules/c3/c3";
+@import "../../../node_modules/bootstrap-grid/main.scss";
+@import "../../../node_modules/font-awesome/scss/font-awesome.scss";
+@import "../../../node_modules/ianstormtaylor-animate/index.sass";
+@import "normalize";
+@import "font";
+@import "page";
+@import "list";
+@import "btn";
+@import "logo";
+@import "modal";
+@import "hashtag-modal";
+@import "navigation";
+@import "tags-cloud";
+@import "util";
+@import "progressbar";
+@import "maps";
+@import "lightbox";
+@import "chart";
+
+/**
+ * Global styles
+ */
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+:focus {
+    outline: 0;
+}
+
+body {
+    background-color: $primaryColor;
+    color: #fff;
+
+    &.no-scrolling {
+        overflow: hidden;
+    }
+}
