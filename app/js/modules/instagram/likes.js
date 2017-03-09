@@ -121,7 +121,8 @@ module.exports = Model.extend({
     parse(data) {
         if (!data) return {};
 
-        return { likes: data.data };
+        //return { likes: data.data };
+        return { likes: [] };
     },
 
     getActivities() {
